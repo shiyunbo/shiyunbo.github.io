@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Django的安装及使用
-parent: Django基础系列
+parent: Django基础教程
 nav_order: 2
 ---
 

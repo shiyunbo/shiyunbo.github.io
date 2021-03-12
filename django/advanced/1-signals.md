@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Typography
+title: 信号
 parent: Django高级教程
 nav_order: 1
 ---
