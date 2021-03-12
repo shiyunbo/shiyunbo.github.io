@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Welcome to Jekyll!
 #
 # This config file is meant for settings that affect your whole site, values
@@ -134,3 +135,5 @@ compress_html:
   #   envs: all
 
 #theme: jekyll-theme-minimal
+=======
+>>>>>>> 36dae004022ba1c2eb113b04af97a2ed1e1265fc
