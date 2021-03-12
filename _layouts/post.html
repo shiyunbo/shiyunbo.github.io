@@ -1,0 +1,17 @@
+---
+layout: default
+---
+  
+  {% if post %}
+    {% assign categories = post.categories %}
+  {% else %}
+    {% assign categories = page.categories %}
+  {% endif %}
+  {% for category in categories %}
+  <a href="{{site.baseurl}}/categories/{{category|slugize}}" class="btn">{{category}}</a>
+  {% unless forloop.last %}&nbsp;{% endunless %}
+  {% endfor %}
+
+<h1>{{ page.title }}</h1>
+<p>{{ page.date | date_to_string }} - By {{ page.author }}</p>
+{{ content }}
