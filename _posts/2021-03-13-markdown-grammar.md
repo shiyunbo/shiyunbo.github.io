@@ -422,24 +422,6 @@ $$
 
 
 
-求累乘
-$$
-\prod_{{
-  \begin{gathered}
-            1\le i \le n\\
-            1\le j \le m
-  \end{gathered}
-            }}
-     M_{i,j}
-$$
-
-开根号
-$$
-\sqrt x * \sqrt[3] x * \sqrt[-1] x
-$$
-
-
-
 省略号的使用
 $$
 {1+2+3+\ldots+n}
