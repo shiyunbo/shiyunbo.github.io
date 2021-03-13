@@ -1,15 +1,16 @@
 ---
 layout: page
-permalink: /categories/Python
-title: Python
+permalink: /categories/Notes
+title: 江哥笔记
 nav_exclude: true
 ---
 <h1>{{ page.title }} </h1>
-<p>Python教程、知识总结及示例。</p>
-{% for post in site.categories.Python %}
+<p>江哥的技术笔记, 关于Git、Markdown、Docker、MySQL、Redis、Nginx、Celery、UWSGI等等。</p>
+{% for post in site.categories.Notes %}
 <hr/>
       <h2>{{ post.title }}</h2>
 	  <span>{{ post.date | date_to_string }}</span> |
 	<p>{{ post.excerpt }}</p>
 	<p><a href="{{ post.url }}">>> Read More</a></p>
+
 {% endfor %}
