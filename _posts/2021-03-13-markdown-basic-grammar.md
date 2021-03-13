@@ -71,8 +71,9 @@ def article_list_by_author(request, username):
 
 无序列表用*号, -号或+号开头
 
-* 农药法规介绍
-* 如何风险评估
+* 医疗
+* 教育
+* 房子
 
 有序列表直接用数字
 
