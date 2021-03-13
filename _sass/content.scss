@@ -211,7 +211,7 @@
   h6 {
     position: relative;
     margin-top: 1.5em;
-    margin-bottom: 0.5em;
+    margin-bottom: 1em;
 
     &:first-child {
       margin-top: $sp-2;
@@ -227,5 +227,8 @@
     + p {
       margin-top: 0;
     }
+  }
+  p {
+  font-size: 18px;
   }
 }
