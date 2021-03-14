@@ -16,7 +16,8 @@ nav_order: 2
 
 ---
 
-Django是一个强大的Python Web框架。本教程将教你如何安装虚拟环境和指定Django版本并通过一个简单的案例演示如何使用它。{: .fs-6 .fw-300 }
+Django是一个强大的Python Web框架。本教程将教你如何安装虚拟环境和指定Django版本并通过一个简单的案例演示如何使用它。
+{: .fs-6 .fw-300 }
 
 ## 如何安装Django
 
