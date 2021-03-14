@@ -182,7 +182,7 @@ INSTALLED_APPS = [
 
 虽然我们有5个urls，但我们只需要创建3个模板:`task_list.html`, `task_detail.html` 和`task_form.html。` 最后一个模板由`task_create` 和`task_update` 视图函数共享。我们在模板中对实例对象进行判断，如果对象已存在则模板对于更新任务，否则是创建任务。task_delete视图不需要模板。
 
-```html
+```python
  # tasks/templates/tasks/task_list.html
  <!DOCTYPE html>
  <html lang="en">
