@@ -24,7 +24,7 @@ nav_order: 4
 
 ![Django CRUD](2-installation-use.assets/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X2dpZi9idWFGTEZLaWNSb0RUQzlhMzBnRHNJamhyaDZVZW81UUFtdlQ0dWxKU2liczBxenFyV0I4dWhDZUlsdTJWTHdDQjRzRHVLY0VHOUF6Q0RHNmhWcVFpYU1LZy82NDA)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
-## **第一步：创建tasks应用，加入INSTALLED_APPS**
+## 第一步：创建tasks应用，加入INSTALLED_APPS
 
 本例假设你已经有了一个`mysite`的Django项目。我们首先使用 `python manage.py startapp tasks` 创建一个名为"tasks"的app，并把它计入到`settings.py`的INSTALLED_APPS中去。
 
@@ -53,7 +53,7 @@ INSTALLED_APPS = [
  ]
 ```
 
-## **第二步：创建Task模型及其关联表单**
+## 第二步：创建Task模型及其关联表单
 
 我们的Task模型非常简单，仅包含name和status两个字段。我们还使用ModelForm类创建了TaskForm，我们在创建任务或更新任务时需要用到这个表单。
 
@@ -87,7 +87,7 @@ INSTALLED_APPS = [
          fields = "__all__"
 ```
 
-## **第三步：编写路由URLConf及相关视图函数**
+## 第三步：编写路由URLConf及视图
 
 我们需要创建5个urls, 对应5个函数视图。这是因为对于Retrieve操作，我们需要编写两个函数视图，一个用户获取任务列表，一个用于获取任务详情。对于`task_detail`, `task_update`和`task_delete`这个三个视图函数，我们还需要通过urls传递任务id或pk参数，否则它们不知道对哪个对象进行操作。
 
@@ -178,11 +178,11 @@ INSTALLED_APPS = [
      return redirect(reverse("tasks:task_list"))
 ```
 
-## **第四步：编写模板**
+## 第四步：编写模板
 
 虽然我们有5个urls，但我们只需要创建3个模板:`task_list.html`, `task_detail.html` 和`task_form.html。` 最后一个模板由`task_create` 和`task_update` 视图函数共享。我们在模板中对实例对象进行判断，如果对象已存在则模板对于更新任务，否则是创建任务。task_delete视图不需要模板。
 
-```xml
+```html
  # tasks/templates/tasks/task_list.html
  <!DOCTYPE html>
  <html lang="en">
@@ -240,11 +240,11 @@ INSTALLED_APPS = [
  </html>
 ```
 
-## **第五步：运行项目，查看效果**
+## 第五步：运行项目，查看效果
 
 运行如下命令，访问http://127.0.0.1:8000/tasks/就应该看到文初效果了。
 
-```css
+```bash
  python manage.py makemigrations
  python manage.py migrate
  python manage.py runserver
