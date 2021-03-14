@@ -28,7 +28,7 @@ nav_order: 4
 
 本例假设你已经有了一个`mysite`的Django项目。我们首先使用 `python manage.py startapp tasks` 创建一个名为"tasks"的app，并把它计入到`settings.py`的INSTALLED_APPS中去。
 
-```nginx
+```python
 # mysite/settings.py
 INSTALLED_APPS = [
      'django.contrib.admin',
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
 然后把app下的urls路径添加到项目文件夹的urls.py里去。
 
-```javascript
+```python
  from django.contrib import admin
  from django.urls import path, include
 
@@ -241,7 +241,7 @@ INSTALLED_APPS = [
  </body>
  </html>
  
-{% raw %}
+{% endraw %}
 ```
 
 ## 第五步：运行项目，查看效果
