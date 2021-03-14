@@ -16,9 +16,7 @@ nav_order: 3
 
 ---
 
-本章我们将介绍下经典的软件开发所遵循的MVC (Model-View-Controller, 模型-视图-控制器) 设计模式以及Django的MVT设计模式(Model-View-Template)是如何遵循这种设计理念的。
-
-{: .fs-6 .fw-300 }
+本章我们将介绍下经典的软件开发所遵循的MVC (Model-View-Controller, 模型-视图-控制器) 设计模式以及Django的MVT设计模式(Model-View-Template)是如何遵循这种设计理念的。{: .fs-6 .fw-300 }
 
 ## 经典的MVC设计模式及其优点
 
