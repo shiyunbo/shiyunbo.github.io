@@ -18,6 +18,8 @@ nav_order: 2
 
 Django是一个强大的Python Web框架。本教程将教你如何安装虚拟环境和指定Django版本并通过一个简单的案例演示如何使用它。
 
+{: .fs-6 .fw-300 }
+
 ## 如何安装Django
 
 ### 检查Python版本
@@ -114,7 +116,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'demo',
+    'demo', # 注册app
 ]
 ```
 
@@ -126,13 +128,13 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('demo/', include('demo.urls'))
+    path('demo/', include('demo.urls')) # 加入app对应urls
 ]
 ```
 
 ### 编写视图函数和 URL 配置
 
-编辑`demo/views.py`, 新增一个名为index的视图函数，该函数的第一个参数必需为`request`，如下所示。request对象封装了当前请求的很多属性和方法, 比如request.user, request.path等等。index视图函数通过HttpReponse方法打印输出当前的request.path。
+编辑`demo/views.py`, 新增一个名为index的视图函数，该函数的第一个参数必需为`request`，如下所示。request对象封装了当前请求的很多属性和方法, 比如request.user, request.path等等。index视图函数通过HttpReponse方法打印输出当前的请求路径request.path。
 
 ```python
 # demo/views.py
@@ -142,7 +144,7 @@ def index(request):
     return HttpResponse("请求路径:{}" .format(request.path))
 ```
 
-接下来我们要进行URL配置。新建`demo/urls.py`, 添加如下代码，其作用是将用户请求的地址与实际需要执行的视图函数相关联。下例中当用户在浏览器中访问index/时，Django将解析url，并调用执行views.py中的index函数。
+接下来我们要进行URL配置。新建`demo/urls.py`, 添加如下代码，其作用是将用户请求的地址与实际需要执行的视图函数相关联。下例中当用户在浏览器中访问index/时，Django将解析url，并调用执行views.py中的index视图函数。
 
 ```python
 # demo/urls.py
