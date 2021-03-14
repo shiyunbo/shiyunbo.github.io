@@ -106,11 +106,8 @@ urlpatterns = [
 
 ```python
 # tasks/views.py
-
 from django.shortcuts import render
 from .models import Task
-
-# Create your views here.
 
 # 任务清单
 def task_list(request):
@@ -124,7 +121,6 @@ def task_list(request):
 
 ```python
 # tasks/urls.py
-
 from django.urls import path
 from . import views
 
@@ -143,6 +139,7 @@ urlpatterns = [
 最后我们要创建`task_list.html`用于展示视图传来的任务列表数据。这个文件的完整路径为`tasks/templates/tasks/task_list.html`。至于模板为什么放这里，我们后续会专门介绍。Django还提供了自己的模板语言，包括常见的判断和循环，专门用来渲染模板。
 
 ```html
+{% raw %}
 # tasks/templates/tasks/task_list.html
 <!DOCTYPE html>
 <html lang="en">
@@ -158,6 +155,7 @@ urlpatterns = [
 {% endfor %}
 </body>
 </html>
+{% endraw %}
 ```
 
 当然此时如果你通过浏览器访问/tasks/, 还看不到任何内容，这是因为你的数据表里还没有任何数据。你可以通过django的admin添加或新增`task_create`视图实现。

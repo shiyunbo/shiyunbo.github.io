@@ -1,11 +1,11 @@
 ---
 layout: default
-title: 一个简单任务管理CRUD小应用
+title: 一个任务管理CRUD小应用
 parent: Django基础教程
 nav_order: 4
 ---
 
-# 一个简单任务管理CRUD小应用
+# 一个任务管理CRUD小应用
 {: .no_toc }
 
 ## 目录
@@ -78,9 +78,7 @@ INSTALLED_APPS = [
  from .models import Task
  from django import forms
 
-
  class TaskForm(forms.ModelForm):
-
 
      class Meta:
          model = Task
@@ -183,8 +181,7 @@ INSTALLED_APPS = [
 虽然我们有5个urls，但我们只需要创建3个模板:`task_list.html`, `task_detail.html` 和`task_form.html。` 最后一个模板由`task_create` 和`task_update` 视图函数共享。我们在模板中对实例对象进行判断，如果对象已存在则模板对于更新任务，否则是创建任务。task_delete视图不需要模板。
 
 ```python
-{% raw %} # 分隔符，防止被解析
-
+{% raw %}
  # tasks/templates/tasks/task_list.html
  <!DOCTYPE html>
  <html lang="en">
@@ -239,8 +236,7 @@ INSTALLED_APPS = [
          <p><input type="submit" class="btn btn-success" value="Submit"></p>
      </form>
  </body>
- </html>
- 
+ </html> 
 {% endraw %}
 ```
 
