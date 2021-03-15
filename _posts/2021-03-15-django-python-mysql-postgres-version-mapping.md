@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Django, Python, MySQL, mysqlclient和Postgres各版本关系对应图
+title: Django版本与Python, MySQL, mysqlclient和Postgres的版本关系对应图
 description: "不同版本Django对应的Python, MySQL, mysqlclient和Postgres版本"
 author: 大江狗
 category: Django
 ---
-不同版本的Django支持不同版本的Python, MySQL, mysqlclient和Postgres。今天花了点时间整理了Django各版本与Python, MySQL, mysqlclient和Postgres各版本之间的关系对应图，看看是不是你想要的?
+不同版本的Django支持不同版本的Python, MySQL, mysqlclient和Postgres。今天花了点时间整理了Django各版本与Python, MySQL, mysqlclient和Postgres版本之间的对应关系图，看看是不是你想要的?
 
 | Django版本 | 发布时间   | 支持Python版本           | MySQL版本 | mysqlclient版本 | Postgres版本 |
 | ---------- | ---------- | ------------------------ | --------- | --------------- | ------------ |
