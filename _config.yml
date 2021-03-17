@@ -17,7 +17,7 @@ title: 大江狗的博客
 description: 大江狗的技术及生活博客
 remote_theme: pmarsceill/just-the-docs
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://shiyunbo.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://pythondjango.cn" # the base hostname & protocol for your site, e.g. http://example.com
 
 
 logo: "/assets/images/logo.png"
