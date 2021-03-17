@@ -77,11 +77,9 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-
 router = DefaultRouter()
 router.register(r'product', ProductViewSet, basename='Product')
 router.register(r'image', ImageViewSet, basename='Image')
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -89,7 +87,6 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('', include(router.urls)),
 ]
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -238,7 +235,6 @@ if settings.DEBUG:
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.contrib.auth import get_user_model
-
 
 User = get_user_model()
 

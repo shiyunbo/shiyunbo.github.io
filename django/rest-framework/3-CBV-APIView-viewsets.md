@@ -74,12 +74,10 @@ class ArticleDetail(APIView):
         except Article.DoesNotExist:
             raise Http404
 
-
     def get(self, request, pk, format=None):
         article = self.get_object(pk)
         serializer = ArticleSerializer(article)
         return Response(serializer.data)
-
 
     def put(self, request, pk, format=None):
         article = self.get_object(pk)
@@ -88,7 +86,6 @@ class ArticleDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
     def delete(self, request, pk, format=None):
         article = self.get_object(pk)
@@ -102,7 +99,6 @@ class ArticleDetail(APIView):
 
 ```python
 # blog/urls.py
-
 from django.urls import re_path
 from rest_framework.urlpatterns import format_suffix_patterns
 
@@ -114,7 +110,6 @@ urlpatterns = [
     re_path(r'^articles/$', views.ArticleList.as_view()),
     re_path(r'^articles/(?P<pk>[0-9]+)$', views.ArticleDetail.as_view()),
 ]
-
 
 urlpatterns = format_suffix_patterns(urlpatterns)
 ```
@@ -137,13 +132,11 @@ urlpatterns = format_suffix_patterns(urlpatterns)
 from rest_framework import mixins
 from rest_framework import generics
 
-
 class ArticleList(mixins.ListModelMixin,
                   mixins.CreateModelMixin,
                   generics.GenericAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
@@ -167,14 +160,11 @@ class ArticleDetail(mixins.RetrieveModelMixin,
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
 
-
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
 
-
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
-
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
@@ -193,10 +183,8 @@ class ArticleList(mixins.ListModelMixin,
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
 
-
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
-
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
@@ -215,7 +203,6 @@ class ArticleList(mixins.ListModelMixin,
 ```python
 # generic class-based views
 from rest_framework import generics
-
 
 class ArticleList(generics.ListCreateAPIView):
     queryset = Article.objects.all()
@@ -250,6 +237,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     # 用一个视图集替代ArticleList和ArticleDetail两个视图
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    
     # 自行添加，将request.user与author绑定
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -264,17 +252,14 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
 from rest_framework.routers import DefaultRouter
 
-
 router = DefaultRouter()
 router.register(r'articles', viewset=views.ArticleViewSet)
-
 
 urlpatterns = [
     # re_path(r'^articles/$', views.ArticleList.as_view()),
     # re_path(r'^articles/(?P<pk>[0-9]+)$', views.ArticleDetail.as_view()),
 ]
 # urlpatterns = format_suffix_patterns(urlpatterns)
-
 urlpatterns += router.urls
 ```
 

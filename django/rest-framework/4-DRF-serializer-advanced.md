@@ -72,7 +72,6 @@ class ArticleSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source="author.username")
     status = serializers.ReadOnlyField(source="get_status_display")
 
-
     class Meta:
         model = Article
         fields = '__all__'
@@ -89,7 +88,6 @@ class ArticleSerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source="author.username")
     full_status = serializers.ReadOnlyField(source="get_status_display")
-
 
     class Meta:
         model = Article
@@ -109,12 +107,10 @@ class ArticleSerializer(serializers.ModelSerializer):
     status = serializers.ReadOnlyField(source="get_status_display")
     cn_status = serializers.SerializerMethodField()
 
-
     class Meta:
         model = Article
         fields = '__all__'
         read_only_fields = ('id', 'author', 'create_date')
-
 
     def get_cn_status(self, obj):
         if obj.status == 'p':
@@ -142,12 +138,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'email')
 
-
 class ArticleSerializer(serializers.ModelSerializer):
     author = UserSerializer() # required=False表示可接受匿名用户，many=True表示有多个用户。
     status = serializers.ReadOnlyField(source="get_status_display")
     cn_status = serializers.SerializerMethodField()
-
 
     class Meta:
         model = Article
@@ -182,7 +176,6 @@ class ArticleSerializer(serializers.ModelSerializer):
     # author = UserSerializer(read_only=True) 注释
     status = serializers.ReadOnlyField(source="get_status_display")
     cn_status = serializers.SerializerMethodField()
-
 
     class Meta:
         model = Article
@@ -238,10 +231,8 @@ serializer.is_valid(raise_exception=True)
 ```python
 from rest_framework import serializers
 
-
 class ArticleSerializer(serializers.Serializer):
     title = serializers.CharField(max_length=100)
-
 
     def validate_title(self, value):
         """
@@ -260,7 +251,6 @@ class ArticleSerializer(serializers.Serializer):
 
 ```python
 from rest_framework import serializers
-
 
 class EventSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=100)
@@ -297,7 +287,6 @@ class EventSerializer(serializers.Serializer):
     name = serializers.CharField()
     room_number = serializers.IntegerField(choices=[101, 102, 103, 201])
     date = serializers.DateField()
-
 
     class Meta:
         # Each room only has one event per day.

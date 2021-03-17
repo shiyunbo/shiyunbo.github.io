@@ -37,12 +37,10 @@ from rest_framework import permissions
 from .permissions import IsOwnerOrReadOnly
 from .pagination import MyPageNumberPagination
 
-
 class ArticleList(generics.ListCreateAPIView):
     serializer_class = ArticleSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     pagination_class = MyPageNumberPagination
-
 
     def get_queryset(self):
         keyword = self.request.query_params.get('q')
@@ -51,7 +49,6 @@ class ArticleList(generics.ListCreateAPIView):
         else:
             queryset = Article.objects.filter(title__icontains=keyword)
         return queryset
-
 
     # associate user with article author.
     def perform_create(self, serializer):

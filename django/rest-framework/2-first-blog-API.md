@@ -90,10 +90,8 @@ class Article(models.Model):
     status = models.CharField(_('Status (*)'), max_length=1, choices=STATUS_CHOICES, default='s', null=True, blank=True)
     create_date = models.DateTimeField(verbose_name=_('Create Date'), auto_now_add=True)
 
-
     def __str__(self):
         return self.title
-
 
     class Meta:
         ordering = ['-create_date']
@@ -152,9 +150,7 @@ from rest_framework import serializers
 from .models import Article
 from django.contrib.auth import get_user_model
 
-
 User = get_user_model()
-
 
 class ArticleSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
@@ -164,13 +160,11 @@ class ArticleSerializer(serializers.Serializer):
     status = serializers.ChoiceField(choices=Article.STATUS_CHOICES, default='p')
     create_date = serializers.DateTimeField(read_only=True)
 
-
     def create(self, validated_data):
         """
         Create a new "article" instance
         """
         return Article.objects.create(**validated_data)
-
 
     def update(self, instance, validated_data):
         """
@@ -199,7 +193,6 @@ class ArticleSerializer(serializers.Serializer):
 ```python
 class ArticleSerializer(serializers.ModelSerializer):
 
-
     class Meta:
         model = Article
         fields = '__all__'
@@ -209,7 +202,6 @@ class ArticleSerializer(serializers.ModelSerializer):
 如果你希望author不可见并让DRF根据request.user自动补全这个字段，可以按如下修改`ArticleSerializer`
 
 ```python
-
 from rest_framework import serializers
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -234,10 +226,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-
 from .models import Article
 from .serializers import ArticleSerializer
-
 
 @api_view(['GET', 'POST'])
 def article_list(request):
@@ -248,7 +238,6 @@ def article_list(request):
         articles = Article.objects.all()
         serializer = ArticleSerializer(articles, many=True)
         return Response(serializer.data)
-
 
     elif request.method == 'POST':
         serializer = ArticleSerializer(data=request.data)
@@ -276,11 +265,9 @@ def article_detail(request, pk):
     except Article.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-
     if request.method == 'GET':
         serializer = ArticleSerializer(article)
         return Response(serializer.data)
-
 
     elif request.method == 'PUT':
         serializer = ArticleSerializer(article, data=request.data)
@@ -288,7 +275,6 @@ def article_detail(request, pk):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
     elif request.method == 'DELETE':
         article.delete()
@@ -337,7 +323,6 @@ urlpatterns = format_suffix_patterns(urlpatterns)
 ```javascript
 from django.contrib import admin
 from django.urls import path, include
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
