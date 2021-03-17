@@ -258,7 +258,6 @@ https://github.com/shiyunbo/django-crud-example
 
 接下来几章我们将详细介绍模型、视图、URL的配置以及模板的基础知识，欢迎关注。
 
-我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
+原创不易，转载请注明来源。我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 
 ![Python Web与Django开发](../../assets/images/django.png)
-

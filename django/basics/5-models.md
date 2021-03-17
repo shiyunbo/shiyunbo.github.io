@@ -203,30 +203,21 @@ class Membership(models.Model):
 
 - `def __str__()`：给单个模型对象实例设置人为可读的名字(可选)。
 - `def save()`：重写save方法(可选)。
-- `def get_absolute_url()`：为单个模型实例对象生成独一无二的url(可选)，如下例：
+- `def get_absolute_url()`：为单个模型实例对象生成独一无二的url(可选)
 
-```python
-def get_absolute_url(self):
-    from django.urls import reverse
-    return reverse('bookstore:publisher_detail', args=[str(self.id)])
-```
-
-除此以外，我们还经常在模型里自定义方法或重写Manager方法。
+除此以外，我们经常自定义方法或Manager方法
 
 ### 示例一：自定义方法 
 
 ```python
-from django.db import models
+# 为每篇文章生成独一无二的url
+def get_absolute_url(self):
+    return reverse('blog:article_detail', args=[str(self.id)])
 
-class Person(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    birth_date = models.DateField()
-
-    @property
-    def full_name(self):
-        "Returns the person's full name."
-        return '%s %s' % (self.first_name, self.last_name)
+# 计数器
+def viewed(self):
+    self.views += 1
+    self.save(update_fields=['views'])
 ```
 
 ### 示例二：自定义Manager方法
@@ -246,11 +237,64 @@ class Book(models.Model):
     dahl_objects = DahlBookManager() # The Dahl-specific manager.
 ```
 
+## 完美的高级Django模型示例
+
+一个完美的django高级模型结构如下所示，可以满足绝大部分应用场景，希望对你有所帮助。
+
+```python
+from django.db import models
+from django.urls import reverse
+ 
+ 
+# 自定义Manager方法
+class HighRatingManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(rating='1')
+    
+ 
+class Product(models.Model):
+    # CHOICES选项
+    RATING_CHOICES = (
+        ("1", 'Very good'),
+        ("2", 'Good'),
+        ("3", 'Bad'),
+    )
+ 
+    # 数据表字段
+    name = models.CharField('name', max_length=30)
+    rating = models.CharField(max_length=1, choices=RATING_CHOICES)
+ 
+    # MANAGERS方法
+    objects = models.Manager()
+     high_rating_products =HighRatingManager()
+ 
+    # META类选项
+    class Meta:
+        verbose_name = 'product'
+        verbose_name_plural = 'products'
+ 
+    # __str__方法
+    def __str__(self):
+        return self.name
+ 
+    # 重写save方法
+    def save(self, *args, **kwargs):
+        do_something()
+        super().save(*args, **kwargs) 
+        do_something_else()
+ 
+    # 定义绝对路径
+    def get_absolute_url(self):
+        return reverse('product_details', kwargs={'pk': self.id})
+ 
+    # 定义其它方法
+    def do_something(self):
+```
+
 ## 小结
 
 本章我们介绍了Django模型的组成: 字段(基础字段和关系字段), META选项和方法。使用Django模型的好处是你无需使用SQL语句创建复杂的数据表，Django会自动根据模型为你生成数据表。同样在Django中如果你希望对数据库中的数据进行增删查改，你也无需使用原生的SQL语句。反之你可以使用Django框架自带的ORM(Object-Relational Mapper, 对象关系映射)提供的API进行相关操作。下章我们将重点介绍如何使用这些API语句操作我们的模型，对数据表里的数据进行增删查改。
 
-我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
+原创不易，转载请注明来源。我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 
 ![Python Web与Django开发](../../assets/images/django.png)
-

@@ -65,8 +65,7 @@ Django的父母Python语言在过去几年中的确受到越来越多的欢迎�
 
 在我国Web应用开发首选语言依然是Java及其框架，然而Python开发工程师或Python后端开发的工作机会也越来越多，工资也相当不错。如果你想作为一名Python开发工程师，从事运维系统开发，或web及网络应用后端开发工作，Django几乎是你必需要学习和掌握的知识。
 
-我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
+原创不易，转载请注明来源。我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 
 ![Python Web与Django开发](../../assets/images/django.png)
-
 

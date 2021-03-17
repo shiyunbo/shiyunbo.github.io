@@ -83,6 +83,7 @@ urlpatterns = [
 
 编辑tasks目录下`models.py`创建Task模型, Task模型包含里名称name和状态status两个字段。当你使用`python manage.py makemigrations`和`python manage.py migrate`命令时，Django会自动为你在数据库创建数据表(默认使用的数据库是免费的sqlite)，表名为`tasks_task`。
 
+```python
     # tasks/models.py
     
     from django.db import models
@@ -99,6 +100,7 @@ urlpatterns = [
     
         def __str__(self):
             return self.name
+```
 
 ### 编写视图并配置路由URL(V)
 接下来我们要编辑视图`views.py`，并新增一个视图函数 `task_list`, 用于展示任务清单。该视图函数从数据库读取了Task对象列表，指定了渲染模板并向模板传递了数据。
@@ -163,7 +165,7 @@ urlpatterns = [
 
 Django的MVT设计模式也遵循了软件设计经典的MVC设计模式。事实上我们在日常Django项目开发过程中一般也是先编写M，再编写V，最后才写T。下篇文章中我们将按MVT的顺序编写一个完整的CRUD(增删查改)小应用。
 
-我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
+原创不易，转载请注明来源。我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 
 ![Python Web与Django开发](../../assets/images/django.png)
 

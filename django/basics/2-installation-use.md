@@ -167,7 +167,6 @@ urlpatterns = [
 
 本文介绍了如何安装Django并使用它，并提供了一个打印当前请求路径的演示案例。然而演示案例中没有用到数据库，而输出的内容也没有美化格式。实际应用中我们向客户端输出的数据大多来自数据库，会通过漂亮的模板或客户端向用户展示数据，这就涉及到模型和模板的使用了。我们后面会做详细介绍。
 
-我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
+原创不易，转载请注明来源。我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 
 ![Python Web与Django开发](../../assets/images/django.png)
-
