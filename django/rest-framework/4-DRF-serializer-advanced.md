@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 玩转序列化器(Serializer)
+title: 玩转序列化器
 parent: Django REST Framework教程
 nav_order: 4
 ---

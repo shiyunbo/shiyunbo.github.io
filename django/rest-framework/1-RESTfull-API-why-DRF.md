@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 为什么要学习DRF以及什么是符合RESTful规范的API
+title: 为什么要学DRF和什么是REST API
 parent: Django REST Framework教程
 nav_order: 1
 ---

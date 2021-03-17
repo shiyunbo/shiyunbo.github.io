@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 使用DRF的序列化器和函数视图开发API
+title: 以DRF序列化器和函数视图开发API
 parent: Django REST Framework教程
 nav_order: 2
 ---

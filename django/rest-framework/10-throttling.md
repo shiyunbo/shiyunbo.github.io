@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 限流(Throttle)
+title: 限流
 parent: Django REST Framework教程
 nav_order: 10
 ---

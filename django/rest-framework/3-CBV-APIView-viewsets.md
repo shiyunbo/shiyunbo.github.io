@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 基于类的视图APIView, GenericAPIView和视图集(ViewSet)
+title: 基于类的视图和视图集
 parent: Django REST Framework教程
 nav_order: 3
 ---
