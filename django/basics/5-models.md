@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Django模型
+title: 模型
 parent: Django基础教程
 nav_order: 5
 ---

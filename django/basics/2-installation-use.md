@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Django的安装及第一个项目
+title: 安装及第一个项目
 parent: Django基础教程
 nav_order: 2
 ---

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 视图编写及如何使用类视图
+title: 视图
 parent: Django基础教程
 nav_order: 8
 ---

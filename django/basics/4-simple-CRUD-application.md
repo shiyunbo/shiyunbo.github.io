@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 一个任务管理CRUD小应用
+title: 一个CRUD小应用
 parent: Django基础教程
 nav_order: 4
 ---

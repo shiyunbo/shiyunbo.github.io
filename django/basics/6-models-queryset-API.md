@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Django ORM数据查询接口
+title: ORM数据查询接口
 parent: Django基础教程
 nav_order: 6
 ---

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Django 路由配置URLconf
+title: 路由
 parent: Django基础教程
 nav_order: 7
 ---

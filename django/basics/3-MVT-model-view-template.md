@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Django的MVT设计模式
+title: MVT设计模式
 parent: Django基础教程
 nav_order: 3
 ---

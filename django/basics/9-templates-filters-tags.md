@@ -5,7 +5,7 @@ parent: Django基础教程
 nav_order: 9
 ---
 
-# 模板及常用模板标签和过滤器
+# 模板
 {: .no_toc }
 
 ## 目录
