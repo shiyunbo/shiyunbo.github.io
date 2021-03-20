@@ -85,7 +85,9 @@ Django的标签(tags)用双%括号包裹，常用Django标签包括：
 
 ## 过滤器(filters)
 
-在模板中你可以使用过滤器(filter)来改变变量在模板中的显示形式。比如`{{ article.title | lower }}`中lower过滤器可以让文章的标题转化为小写。Django的模板提供了许多内置过滤器，你可以直接使用，非常方便。
+在模板中你可以使用过滤器(filter)来改变变量在模板中的显示形式。比如{% raw %}`{{ article.title | lower }}`{% endraw %}中lower过滤器可以让文章的标题转化为小写。Django的模板提供了许多内置过滤器，你可以直接使用，非常方便。
+
+{% raw %}
 
 | 过滤器             | 例子                                         |
 | ------------------ | -------------------------------------------- |
@@ -114,7 +116,10 @@ Django的标签(tags)用双%括号包裹，常用Django标签包括：
 | urlencode          | {{ path \| urlencode }} URL转义              |
 | wordcount          | {{ body \| wordcount }} 单词字数             |
 
+{% endraw %}
+
 ## 模板文件的放置路径
+
 模板文件有两种, 一种是属于整个项目(project)的模板,一种是属于某个应用(app)的模板。模板文件的放置路径必需正确, 否则Django找不到模板容易出现`TemplateDoesNotExist`的错误。
 
 ### 项目模板
