@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Django模型查询API
+title: Django ORM数据查询接口
 parent: Django基础教程
 nav_order: 6
 ---
 
-# Django模型查询API
+# Django ORM数据查询接口
 {: .no_toc }
 
 ## 目录
@@ -26,7 +26,7 @@ from django.db import models
 class Article(models.Model):
     title = models.CharField('标题', max_length=200, unique=True)
     body = models.TextField('正文')
-    created = models.DateTimeField(auto_now_on=True)
+    created = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.title
@@ -69,12 +69,12 @@ user = User.objects.create_user(username='john, email='john@gmail.com',password=
 
 在Django中向数据库中插入多条数据时，每使用save或create方法保存一条就会执行一次SQL。而Django提供的`bulk_create`方法可以一次SQL添加多条数据，效率要高很多，如下所示：
 
-```
+```python
 # 内存生成多个对象实例
 articles  = [Article(title="title1", body="body1"), Article(title="title2", body="body2"), Article(title="title3", body="body3")]
 
 # 执行一次SQL插入数据
-posts.objects.bulk_create(articles)
+Article.objects.bulk_create(articles)
 ```
 
 ## 删
@@ -201,10 +201,13 @@ articles = Article.objects.filter(title__endswith='python')
 
 ```python
 # 查询2021年发表的文章
-articles = Article.objects.filter(created__year=2021)
+Article.objects.filter(created__year=2021)
+
+# 查询2021年3月19日发表的文章
+import datetime
+Article.objects.filter(created__date=datetime.date(2021,3,19))
 
 # 查询2021年1月1日以后发表的文章
-import datetime
 Article.objects.filter(created__gt=datetime.date(2021, 1, 1))
 
 # 与当前时间相比，查询即将发表的文章
