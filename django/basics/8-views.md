@@ -42,7 +42,6 @@ def index(request):
 ```python
 # blog/urls.py
 from django.urls import path
-
 from . import views
 
 urlpatterns = [
@@ -79,8 +78,8 @@ def article_detail(request, id):
 下图是模板的代码。模板可以直接调用通过视图传递过来的内容。
 
 ```html
-{% raw %}
 # blog/article_list.html
+{% raw %} 
 {% block content %}
 {% for article in latest_articles %}
      {{ article.title }}
@@ -93,8 +92,7 @@ def article_detail(request, id):
    {{ article.title }}
    {{ article.pub_date }}
    {{ article.body }}
-{% endblock %}
-{% endraw %}
+{% endblock %}{% endraw %}
 ```
 
 ## 更复杂的案例: 视图处理用户提交的数据
@@ -149,7 +147,6 @@ def article_detail(request, id):
 
 ```python
 #blog/forms.py
-
 from .models import Article
 from django import forms
 
@@ -157,7 +154,6 @@ class ArticleForm(forms.ModelForm):
      class Meta:
          model = Article
          fields = ['title', 'body']
-
 ```
 
 ## 基于函数的视图和基于类的视图
@@ -171,7 +167,6 @@ from django.views.generic import View
 
 class MyClassView(View):
     """类视图"""
-
     def get(self, request):
         """处理GET请求"""
         return render(request, 'register.html')
@@ -179,14 +174,12 @@ class MyClassView(View):
     def post(self, request):
         """处理POST请求"""
         return ...
-
 ```
 **注意**：在URL配置文件中使用类视图时，需要使用`as_view()`将其伪装成方法：
 
 ```python
 # blog/urls.py
 from django.urls import path, re_path
- 
 from . import views
  
 urlpatterns = [
@@ -354,13 +347,12 @@ class ArticleCreateView(CreateView):
 CreateView默认的模板是`model_name_form.html,` 即`article_form.html`。这里CreateView还会根据`fields`自动生成表单字段。默认的context_object_name是`form`。模板代码如下图所示:
 
 ```html
-{% raw %}
 # blog/article_form.html
+{% raw %}
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save" />
-</form>
-{% endraw %}
+</form>{% endraw %}
 ```
 
 如果你不想使用默认的模板和默认的表单，你可以通过重写`template_name`和`form_class`来完成CreateView的自定义。
@@ -501,13 +493,12 @@ class ArticleDelete(DeleteView):
 模板内容如下:
 
 ```html
-{% raw %}
 # blog/article_confirm_delete.html
+{% raw %}
 <form method="post">{% csrf_token %}
     <p>Are you sure you want to delete "{{ article }}"?</p>
     <input type="submit" value="Confirm" />
-</form>
-{% endraw %}
+</form>{% endraw %}
 ```
 
 ## 小结

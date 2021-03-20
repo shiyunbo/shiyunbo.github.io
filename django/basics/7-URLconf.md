@@ -26,7 +26,6 @@ Django的项目文件夹和每个应用(app)目录下都有`urls.py`文件，它
 ```python
 # blog/urls.py
 from django.urls import path
- 
 from . import views
  
 urlpatterns = [
@@ -37,7 +36,7 @@ urlpatterns = [
 # blog/views.py
 def index(request):
     # 展示所有文章
-    
+   
 def article_detail(request, id):
     # 展示某篇具体文章
 ```
@@ -72,7 +71,6 @@ urlpatterns = [
 ```python
 # blog/urls.py
 from django.urls import path, re_path
- 
 from . import views
  
 urlpatterns = [
@@ -106,9 +104,7 @@ urlpatterns = [
 
 ```python
 # 示例一，PATH
-
 from django.urls import path
-
 from . import views
 
 urlpatterns = [
@@ -120,7 +116,6 @@ urlpatterns = [
 
 # 示例二：RE_PATH，与上例等同
 from django.urls import path, re_path
-
 from . import views
 
 urlpatterns = [
@@ -137,7 +132,6 @@ urlpatterns = [
 ```python
 # blog/urls.py
 from django.urls import path, re_path
- 
 from . import views
 
 # app_name = 'blog' # 命名空间，后面会用到。
@@ -157,11 +151,9 @@ urlpatterns = [
 
 ### 使用命名URL
 ```html
-{% raw %}
-{% for article in articles %}
+{% raw %}{% for article in articles %}
     <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
-{% endfor %}
-{% endraw %}
+{% endfor %}{% endraw %}
 ```
 
 `url`是个模板标签，其作用是对命名的url进行方向解析，动态生成链接。
@@ -171,11 +163,9 @@ urlpatterns = [
 ### 硬编码URL - 不建议
 
 ```html
-{% raw %}
-{% for article in articles %}
+{% raw %}{% for article in articles %}
     <a href="blog/articles/{{ article.id }}">{{ article.title }}</a>
-{% endfor %}
-{% endraw %}
+{% endfor %}{% endraw %}
 ```
 
 如果你还没意识到方法1的好处，那么想想吧，假设老板让你把全部模板链接由blog/articles/id改为blog/article/id, 那种方法更快？更改所有html文件里的链接，还是只改URL配置里的一个字母?
@@ -183,11 +173,9 @@ urlpatterns = [
 那么问题来了。假设不同的app（比如news和blog)里都有`article_detail`这个命名URL, 我们怎么避免解析冲突呢？ 这时我们只需要在`blog/urls.py`加上`app_name='blog'`这个命名空间即可，然后在模板中以`blog:article_detail`使用即可。
 
 ```html
-{% raw %}
-{% for article in articles %}
+{% raw %}{% for article in articles %}
     <a href="{% url 'blog:article_detail' article.id %}">{{ article.title }}</a>
-{% endfor %}
-{% endraw %}
+{% endfor %}{% endraw %}
 ```
 
 可惜的是命名的URL一般只在模板里使用，不能直接在视图里使用。如果我们有了命名的URL，我们如何把它转化成常规的URL在视图里使用呢？
@@ -210,7 +198,6 @@ reverse('blog:article_detail', args=[id])
  ```python
 # blog/urls.py
 from django.urls import path, re_path
- 
 from . import views
  
 urlpatterns = [
@@ -237,7 +224,6 @@ class ArticleList(ListView):
  ```python
 # blog/urls.py
 from django.urls import path, re_path
- 
 from . import views
  
 urlpatterns = [

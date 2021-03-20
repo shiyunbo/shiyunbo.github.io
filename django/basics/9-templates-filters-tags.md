@@ -79,8 +79,7 @@ Django的标签(tags)用双%括号包裹，常用Django标签包括：
 {% include "base.html" %}
 
 # 获取当前时间now
-{% now "jS F Y H:i" %}
-{% endraw %}
+{% now "jS F Y H:i" %}{% endraw %}
 ```
 
 ## 过滤器(filters)
@@ -180,8 +179,8 @@ myproject/ # 项目名
 Django支持模板的继承。你需要使用`extends`标签。在下面经典模板继承案例中，`index.html`继承了`base.html`的布局,如sidebar和footer,但是content模块会替换掉`base.html`中的content模块。
 
 ```html
-{% raw %}
 # base.html
+{% raw %}
 {% block sidebar %}
 {% endblock %}
 
@@ -195,8 +194,7 @@ Django支持模板的继承。你需要使用`extends`标签。在下面经典�
 {% extends "base.html" %}
 {% block content %}
      {{ some code }}
-{% endblock }
-{% endraw %}
+{% endblock }{% endraw %}
 ```
 
 `extends`标签支持相对路径，这就意味着当文件夹结构如下所示时:
@@ -216,8 +214,7 @@ base1.html
 {% raw %}
 {% extends "./base2.html" %}
 {% extends "../base1.html" %}
-{% extends "./my/base3.html" %}
-{% endraw %}
+{% extends "./my/base3.html" %}{% endraw %}
 ```
 
 ## 模板文件中加载静态文件
@@ -246,15 +243,13 @@ STATICFILES_DIRS = [
 ```html
 {% raw %}
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <title>{% block title %} Django Web Applications {% endblock %} </title>
     <link rel="stylesheet" href="{% static 'app/custom.css' %}">
     <script type='text/javascript' src="{% static 'app/main.js' %}"></script>  
-</head>
-{% endraw %}
+</head>{% endraw %}
 ```
 
 注意：`load static`需要放在html的头部位置。如果`extends`标签和`load`同时存在，`extends`需要放在最上面，然后再放`load`等标签。
