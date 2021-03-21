@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 视图
-parent: 大江狗的Django入门笔记
+parent: 大江狗的Django入门教程
 nav_order: 8
 ---
 
@@ -494,7 +494,7 @@ class ArticleDelete(DeleteView):
 
 ## 小结
 
-本章我们详细介绍了Django的视图(View)是如何工作的，并展示了如何使用基于函数的视图和通用类视图(`ListView`, `DetailView`, `CreateView`, `UpdateView`, `DeleteView`)编写基本的增删改查视图。下章我们将讲解模板语言, 常见的模板标签和过滤器以及如何正确配置模板文件。
+本章我们详细介绍了Django的视图(View)是如何工作的，并展示了如何使用基于函数的视图和通用类视图(`ListView`, `DetailView`, `CreateView`, `UpdateView`, `DeleteView`)编写基本的增删改查视图。在Django进阶部分我们将介绍更多视图编写技巧。下章我们将讲解模板语言, 常见的模板标签和过滤器以及如何正确配置模板文件。
 
 原创不易，转载请注明来源。我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 

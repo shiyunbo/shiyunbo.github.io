@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 信号
-parent: 大江狗Django进阶笔记
+parent: 大江狗的Django进阶教程
 nav_order: 1
 ---
 

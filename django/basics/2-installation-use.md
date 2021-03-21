@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 安装及第一个项目
-parent: 大江狗的Django入门笔记
+parent: 大江狗的Django入门教程
 nav_order: 2
 ---
 

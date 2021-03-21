@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 模板
-parent: 大江狗的Django入门笔记
+parent: 大江狗的Django入门教程
 nav_order: 9
 ---
 
@@ -143,7 +143,9 @@ TEMPLATES = [
 
 ### 应用模板
 
-属于单个应用的模板文件路径一般是`app`目录下的`app/templates/app`文件夹, 这样做的好处是可以避免模板命名冲突。下图以博客项目为例展示了项目模板文件和应用模板文件正确的存放路径。
+属于单个应用的模板文件路径一般是`app`目录下的`app/templates/app`文件夹, 这样做的好处是可以避免模板命名冲突。
+
+下图以博客项目为例展示了项目模板文件和应用模板文件正确的存放路径。
 
 ```bash
 myproject/ # 项目名
@@ -172,6 +174,16 @@ myproject/ # 项目名
          dev.txt
          test.txt
          prod.txt
+```
+
+对于上面这个项目布局，在使用`render`方法指定渲染模板时，无需给出完整的路径，只给出相对于`templates`的路径即可，比如：
+
+```python
+# 指定项目模板
+return render(request, "index.html", { "msg": "hello world!",})
+
+# 指定应用模板
+return render(request, "blog/list.html", { "articles": articles,})
 ```
 
 ## 模板的继承
@@ -256,7 +268,7 @@ STATICFILES_DIRS = [
 
 ## 小结
 
-本章总结了Django的模板语言以及模板标签和过滤器, 并对模板文件和静态文件的存放路径做了详细介绍。在Django进阶笔记部分我们还将介绍如何自定义模板标签和过滤器。下章我们将介绍Django的表单(forms), 如何自定义表单类, 如何渲染表单, 如果自定义表单验证以及如何处理验证过的数据。
+本章总结了Django的模板语言以及模板标签和过滤器, 并对模板文件和静态文件的存放路径做了详细介绍。在Django进阶教程部分我们还将介绍如何自定义模板标签和过滤器。下章我们将介绍Django的表单(forms), 如何自定义表单类, 如何渲染表单, 如果自定义表单验证以及如何处理验证过的数据。
 
 原创不易，转载请注明来源。我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 

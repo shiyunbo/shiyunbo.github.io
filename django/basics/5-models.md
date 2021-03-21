@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 模型
-parent: 大江狗的Django入门笔记
+parent: 大江狗的Django入门教程
 nav_order: 5
 ---
 
@@ -334,7 +334,7 @@ class Product(models.Model):
 
 ## 小结
 
-本章我们介绍了Django模型的组成: 字段(基础字段和关系字段), META选项和方法。我还没有介绍模型的继承及模型特殊字段(比如Choices枚举类型)，这些我们将放在Django进阶笔记的模型进阶部分。查询下章我们将重点介绍如何使用这些API语句操作我们的模型，对数据表里的数据进行增删查改。
+本章我们介绍了Django模型的组成: 字段(基础字段和关系字段), META选项和方法。我还没有介绍模型的继承及模型特殊字段(比如Choices枚举类型)，这些我们将放在Django进阶教程的模型进阶部分。查询下章我们将重点介绍如何使用这些API语句操作我们的模型，对数据表里的数据进行增删查改。
 
 原创不易，转载请注明来源。我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 

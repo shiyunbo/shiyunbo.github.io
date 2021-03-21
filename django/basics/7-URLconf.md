@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 路由
-parent: 大江狗的Django入门笔记
+parent: 大江狗的Django入门教程
 nav_order: 7
 ---
 
