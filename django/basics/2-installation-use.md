@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 安装及第一个项目
-parent: Django基础教程
+parent: 大江狗的Django入门笔记
 nav_order: 2
 ---
 
@@ -133,7 +133,9 @@ urlpatterns = [
 
 ### 编写视图函数和 URL 配置
 
-编辑`demo/views.py`, 新增一个名为index的视图函数，该函数的第一个参数必需为`request`，如下所示。request对象封装了当前请求的很多属性和方法, 比如request.user, request.path等等。index视图函数通过HttpReponse方法打印输出当前的请求路径request.path。
+编辑`demo/views.py`, 新增一个名为index的视图函数。每个视图函数的第一个默认参数都必需是`request`, 它是一个全局变量。Django把每个用户请求封装成了`request`对象，它包含里当前请求的所有信息，比如请求路径`request.path`, 当前用户`request.user`以及用户通过POST提交的数据`request.POST`。
+
+index视图函数通过调用`HttpReponse`方法打印输出当前的请求路径`request.path`。
 
 ```python
 # demo/views.py
@@ -162,6 +164,8 @@ urlpatterns = [
 使用`python manage.py runserver`命令重新启动测试服务器，并访问http://127.0.0.1:8000/index/, 你将看到如下页面：
 
 ![图片](2-installation-use.assets/640)
+
+
 
 ## 小结
 

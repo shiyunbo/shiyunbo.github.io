@@ -1,7 +1,7 @@
 ---
 layout: default
-title: 模板及常用模板标签和过滤器
-parent: Django基础教程
+title: 模板
+parent: 大江狗的Django入门笔记
 nav_order: 9
 ---
 
@@ -256,7 +256,7 @@ STATICFILES_DIRS = [
 
 ## 小结
 
-本章总结了Django的模板语言以及模板标签和过滤器, 并对模板文件和静态文件的存放路径做了详细介绍。下章我们将介绍Django的表单(forms), 如何自定义表单类, 如何渲染表单, 如果自定义表单验证以及如何处理验证过的数据。
+本章总结了Django的模板语言以及模板标签和过滤器, 并对模板文件和静态文件的存放路径做了详细介绍。在Django进阶笔记部分我们还将介绍如何自定义模板标签和过滤器。下章我们将介绍Django的表单(forms), 如何自定义表单类, 如何渲染表单, 如果自定义表单验证以及如何处理验证过的数据。
 
 原创不易，转载请注明来源。我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 

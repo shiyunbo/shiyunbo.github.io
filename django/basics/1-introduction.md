@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 为什么学Django及Django的未来在哪里?
-parent: Django基础教程
+parent: 大江狗的Django入门笔记
 nav_order: 1
 ---
 

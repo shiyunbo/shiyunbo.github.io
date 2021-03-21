@@ -1,11 +1,11 @@
 ---
 layout: default
 title: 视图
-parent: Django基础教程
+parent: 大江狗的Django入门笔记
 nav_order: 8
 ---
 
-# 视图编写及如何使用类视图
+# 视图
 {: .no_toc }
 
 ## 目录
@@ -21,7 +21,7 @@ Django的视图(view)是处理业务逻辑的核心，它负责处理用户的�
 ## 什么是视图(View)及其工作原理
 Django的Web开发也遵循经典软件设计MVC模式开发的。View (视图) 主要根据用户的请求返回数据，用来展示用户可以看到的内容(比如网页，图片)，也可以用来处理用户提交的数据，比如保存到数据库中。Django的视图(`views.py`）通常和URL路由(URLconf)一起工作的。服务器在收到用户通过浏览器发来的请求后，会根据用户请求的url地址和`urls.py`里配置的url-视图映射关系，去执行相应视图函数或视图类，从而返回给客户端响应数据。
 
-我们先看一个最简单的视图View。当用户发来一个请求`request`时，我们通过`HttpResponse`打印出`Hello， World!`。
+我们先看一个最简单的函数视图。当用户发来一个请求`request`时，我们通过`HttpResponse`打印出`Hello， World!`。
 
 ```html
 # views.py
@@ -31,7 +31,7 @@ def index(request):
     return HttpResponse("Hello， World!")
 ```
 
-**提示**：每个视图函数的第一个默认参数都必需是`request`, 它是一个全局变量。Django把个用户请求封装成了`request`对象，它包含里当前请求的所有信息，比如请求路径`request.path`, 当前用户`request.user`以及用户通过POST提交的数据`request.POST`。
+**提示**：每个视图函数的第一个默认参数都必需是`request`, 它是一个全局变量。Django把每个用户请求封装成了`request`对象，它包含里当前请求的所有信息，比如请求路径`request.path`, 当前用户`request.user`以及用户通过POST提交的数据`request.POST`。
 
 上面例子过于简单。在实际Web开发过程中，我们的View不仅要负责从数据库读写数据，还需要指定显示内容的模板，并提供模板渲染页面所需的内容对象(`context object`)。接下来我们要看一个更接近现实的案例。
 
@@ -218,7 +218,7 @@ Django提供了很多通用的基于类的视图，来帮我们简化视图的�
 
 注意：如果你要使用Edit view，请务必在模型里里定义`get_absolute_url()`方法，否则会出现错误。这是因为通用视图在对一个对象完成编辑后，需要一个返回链接。`get_absolute_url()`可以为某个对象生成独一无二的url。
 
-## Django通用视图之ListView
+### ListView
 
 `ListView`用来展示一个对象的列表。它只需要一个参数模型名称即可。比如我们希望展示所有文章列表，我们的`views.py`可以简化为:
 
@@ -245,8 +245,6 @@ def index(request):
 - 提取了需要显示的对象列表或数据集`queryset: Article.objects.all()`
 - 指定了用来显示对象列表的模板名称: 默认`app_name/model_name_list.html`, 即`blog/article_list.html`.
 - 指定了内容对象名称(context object name):默认值`object_list`
-
-### ListView自定义
 
 你或许已经注意到了2个问题：需要显示的文章对象列表并没有按发布时间逆序排列，默认内容对象名称`object_list`也不友好。或许你也不喜欢默认的模板名字，还希望通过这个视图给模板传递额外的内容(比如现在的时间)。你可以轻易地通过重写`queryset`, `template_name`和`context_object_name`来完成ListView的自定义。
 
@@ -293,7 +291,7 @@ class IndexView(ListView):
 ```
 
 
-## Django通用视图之DetailView
+### DetailView
 
 `DetailView`用来展示一个具体对象的详细信息。它需要URL传递某个对象的具体参数（如id, pk, slug值）。本例中用来展示某篇文章详细内容的view可以简写为:
 
@@ -307,8 +305,6 @@ class ArticleDetailView(DetailView):
 ```
 
 `DetailView`默认的模板是`app/model_name_detail.html`,默认的内容对象名字`context_object_name`是model_name。本例中默认模板是`blog/article_detail.html`, 默认对象名字是`article`, 在模板里可通过 `{{ article.title }}`获取文章标题。
-
-### DetailView自定义
 
 你同样可以通过重写`queryset`, `template_name`和`context_object_name`来完成DetailView的自定义。你还可以通过重写`get_context_data`方法传递额外的参数或内容。如果你指定了queryset, 那么返回的object是queryset.get(pk = id), 而不是model.objects.get(pk = id)。
 
@@ -330,12 +326,11 @@ class ArticleDetailView(DetailView):
         return context
 ```
 
-
-## Django通用视图之CreateView
+###  CreateView
 
 `CreateView`一般通过某个表单创建某个对象，通常完成后会转到对象列表。比如一个最简单的文章创建CreateView可以写成：
 
-```html
+```python
 from django.views.generic.edit import CreateView
 from .models import Article
 
@@ -357,11 +352,9 @@ CreateView默认的模板是`model_name_form.html,` 即`article_form.html`。这
 
 如果你不想使用默认的模板和默认的表单，你可以通过重写`template_name`和`form_class`来完成CreateView的自定义。
 
-### form_valid方法
+对于`CreateView`, 重写它的`form_valid`方法不是必需，但很有用。当用户提交的数据是有效的时候，执行该方法。你可以通过定义此方法做些别的事情，比如发送邮件，存取额外的数据。
 
-虽然`form_valid`方法不是必需，但很有用。当用户提交的数据是有效的时候，你可以通过定义此方法做些别的事情，比如发送邮件，存取额外的数据。
-
-```html
+```python
 from django.views.generic.edit import CreateView
 from .models import Article
 from .forms import ArticleCreateForm
@@ -378,25 +371,25 @@ class ArticleCreateView(CreateView):
 
 form_valid方法一个常见用途就是就是将创建对象的用户与model里的user结合（需要用户先登录再提交)。见下面例子。
 
-```html
+```python
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView
-from myapp.models import Author
+from .models import Article
 
-class AuthorCreate(LoginRequiredMixin, CreateView):
-    model = Author
-    fields = ['name']
+class ArticleCreate(LoginRequiredMixin, CreateView):
+    model = Article
+    fields = ['title', 'body']
 
     def form_valid(self, form):
-        form.instance.created_by = self.request.user
+        form.instance.author = self.request.user
         return super().form_valid(form)
 ```
 
-## Django通用视图之UpdateView
+### UpdateView
 
 UpdateView一般通过某个表单更新现有对象的信息，更新完成后会转到对象详细信息页面。它需要URL提供访问某个对象的具体参数（如pk, slug值）。比如一个最简单的文章更新的UpdateView如下所示。
 
-```html
+```python
 from django.views.generic.edit import UpdateView
 from .models import Article
 
@@ -410,14 +403,12 @@ UpdateView和CreateView很类似，比如默认模板都是`model_name_form.html
 - CreateView显示的表单是空表单，UpdateView中的表单会显示现有对象的数据。
 - 用户提交表单后，CreateView转向对象列表，UpdateView转向对象详细信息页面。
 
-### UpdateView自定义
-
 你可以通过重写`template_name`和`form_class`来完成UpdateView的自定义。
 
 - 本例中默认的模板是article_form.html, 你可以改为article_update_form.html。
 - 虽然form_valid方法不是必需，但很有用。当用户提交的数据是有效的时候，你可以通过定义此方法做些别的事情，比如发送邮件，存取额外的数据。
 
-```html
+```python
 from django.views.generic.edit import UpdateView
 from .models import Article
 from .forms import ArticleUpdateForm
@@ -451,13 +442,13 @@ class ArticleUpdateView(UpdateView):
 ```
 
 
-## Django通用视图之FormView
+### FormView
 
 FormView一般用来展示某个表单，而不是用于创建或更新某个模型对象。当用户输入信息未通过表单验证，显示错误信息。当用户输入信息通过表单验证提交后，跳到其它页面。使用FormView一般需要定义`template_name`, `form_class`和`success_url`.
 
 见下面代码。
 
-```html
+```python
 # views.py - Use FormView
 from myapp.forms import ContactForm
 from django.views.generic.edit import FormView
@@ -474,13 +465,13 @@ class ContactView(FormView):
         return super().form_valid(form)
 ```
 
-## Django通用视图之DeleteView
+### DeleteView
 
 DeleteView一般用来删除某个具体对象。它要求用户点击确认后再删除一个对象。使用这个通用视图，你需要定义模型的名称model和成功删除对象后的返回的URL。默认模板是`myapp/model_confirm_delete.html`。默认内容对象名字是model_name。本例中为article。
 
 本例使用了默认的模板`blog/article_confirm_delete.html`，删除文章后通过`reverse_lazy`方法返回到index页面。
 
-```html
+```python
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from .models import Article

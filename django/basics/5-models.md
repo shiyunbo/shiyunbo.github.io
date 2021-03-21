@@ -1,11 +1,11 @@
 ---
 layout: default
 title: 模型
-parent: Django基础教程
+parent: 大江狗的Django入门笔记
 nav_order: 5
 ---
 
-# Django模型
+# 模型
 {: .no_toc }
 
 ## 目录
@@ -100,25 +100,23 @@ class Book(models.Model):
 
 ### 基础字段
 
-**CharField() 字符字段**
+**CharField() **
 
-一般需要通过max_length = xxx 设置最大长度。如不是必填项，可设置blank = True和default = ''。如果用于username, 想使其唯一，可以设置unique = True。如果有choice选项，可以设置 choices = XXX_CHOICES
+一般需要通过max_length = xxx 设置最大字符长度。如不是必填项，可设置blank = True和default = ''。如果用于username, 想使其唯一，可以设置`unique = True`。如果有choice选项，可以设置 choices = XXX_CHOICES
 
-**TextField() 文本字段**
+**TextField() **
 
 适合大量文本，max_length = xxx选项可选。
 
-**DateField() 和DateTimeField() 日期与日期时间字段**
+**DateField() 和DateTimeField() 
 
 可通过default=xx选项设置默认日期和时间。
 
-- 对于DateField: default=date.today - 先要`from datetime import date`
-
 - 对于DateTimeField: default=timezone.now - 先要`from django.utils import timezone`
 - 如果希望自动记录一次修改日期(modified)，可以设置: `auto_now=True`
-- 如果希望自动记录创建日期(created),可以设置`auto_now_on=True`
+- 如果希望自动记录创建日期(created),可以设置`auto_now_add=True`
 
-**EmailField() 邮件字段 **
+**EmailField() 
 
 如不是必填项，可设置blank = True和default = '。一般Email用于用户名应该是唯一的，建议设置unique = True
 
@@ -158,7 +156,7 @@ class Book(models.Model):
 - 设置 "`through = 'intermediary model'` " 如果需要建立中间模型来搜集更多信息。
 - 可以设置 "`related_name = xxx`" 便于反向查询。
 
-举例：一个人加入多个组，一个组包含多个人，我们需要额外的中间模型记录加入日期和理由。
+示例：一个人加入多个组，一个组包含多个人，我们需要额外的中间模型记录加入日期和理由。
 
 ```python
 from django.db import models
@@ -182,6 +180,52 @@ class Membership(models.Model):
     date_joined = models.DateField()
     invite_reason = models.CharField(max_length=64)
 ```
+
+对于`OneToOneField`和`ForeignKey`, `on_delete`选项和`related_name`是两个非常重要的设置，前者决定了了关联外键删除方式，后者决定了模型反向查询的名字。
+
+### on_delete删除选项
+
+Django提供了如下几种关联外键删除选项, 可以根据实际需求使用。
+
+- `CASCADE`：级联删除。当你删除publisher记录时，与之关联的所有 book 都会被删除。
+- `PROTECT`: 保护模式。如果有外键关联，就不允许删除，删除的时候会抛出ProtectedError错误，除非先把关联了外键的记录删除掉。例如想要删除publisher，那你要把所有关联了该publisher的book全部删除才可能删publisher。
+- `SET_NULL`: 置空模式。删除的时候，外键字段会被设置为空。删除publisher后，book 记录里面的publisher_id 就置为null了。
+- `SET_DEFAULT`: 置默认值，删除的时候，外键字段设置为默认值。
+- `SET()`: 自定义一个值。
+- `DO_NOTHING`：什么也不做。删除不报任何错，外键值依然保留，但是无法用这个外键去做查询。
+
+### related_name选项
+
+ `related_name`用于设置模型反向查询的名字，非常有用。在文初的`Publisher`和`Book`模型里，我们可以通过`book.publisher`获取每本书的出版商信息，这是因为`Book`模型里有`publisher`这个字段。但是`Publisher`模型里并没有`book`这个字段，那么我们如何通过出版商反查其出版的所有书籍信息呢？
+
+Django对于关联字段默认使用`模型名_set`进行反查，即通过`publisher.book_set.all`查询。但是`book_set`并不是一个很友好的名字，我们更希望通过`publisher.books`获取一个出版社已出版的所有书籍信息，这时我们就要修改我们的模型了，将`related_name`设为`books`, 如下所示：
+
+```python
+# models.py
+from django.db import models
+ 
+class Publisher(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=60)
+ 
+    def __str__(self):
+        return self.name
+
+# 将related_name设置为books
+class Book(models.Model):
+    name = models.CharField(max_length=30)
+    description = models.TextField(blank=True, default='')
+    publisher = ForeignKey(Publisher,on_delete=models.CASCADE, related_name='books')
+    add_date = models.DateField(auto_now_add=True)
+ 
+    def __str__(self):
+        return self.name
+```
+
+我们再来对比一下如何通过publisher查询其出版的所有书籍，你觉得哪个更好呢?
+
+1. 设置`related_name`前：`publisher.book_set.all`
+2. 设置`related_name`后：`publisher.books.all`
 
 ## 模型的META选项
 
@@ -245,28 +289,25 @@ class Book(models.Model):
 from django.db import models
 from django.urls import reverse
  
- 
 # 自定义Manager方法
 class HighRatingManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(rating='1')
-    
- 
+        return super().get_queryset().filter(rating=1)
+
+# CHOICES选项
+class Rating(models.IntegerChoices):
+    VERYGOOD = 1, 'Very Good'
+    GOOD = 2, 'Good'
+    BAD = 3, 'Bad'
+
 class Product(models.Model):
-    # CHOICES选项
-    RATING_CHOICES = (
-        ("1", 'Very good'),
-        ("2", 'Good'),
-        ("3", 'Bad'),
-    )
- 
     # 数据表字段
     name = models.CharField('name', max_length=30)
-    rating = models.CharField(max_length=1, choices=RATING_CHOICES)
+    rating = models.IntegerField(max_length=1, choices=Rating.choices)
  
     # MANAGERS方法
     objects = models.Manager()
-     high_rating_products =HighRatingManager()
+    high_rating_products =HighRatingManager()
  
     # META类选项
     class Meta:
@@ -283,17 +324,17 @@ class Product(models.Model):
         super().save(*args, **kwargs) 
         do_something_else()
  
-    # 定义绝对路径
+    # 定义单个对象绝对路径
     def get_absolute_url(self):
         return reverse('product_details', kwargs={'pk': self.id})
  
-    # 定义其它方法
+    # 其它自定义方法
     def do_something(self):
 ```
 
 ## 小结
 
-本章我们介绍了Django模型的组成: 字段(基础字段和关系字段), META选项和方法。使用Django模型的好处是你无需使用SQL语句创建复杂的数据表，Django会自动根据模型为你生成数据表。同样在Django中如果你希望对数据库中的数据进行增删查改，你也无需使用原生的SQL语句。反之你可以使用Django框架自带的ORM(Object-Relational Mapper, 对象关系映射)提供的API进行相关操作。下章我们将重点介绍如何使用这些API语句操作我们的模型，对数据表里的数据进行增删查改。
+本章我们介绍了Django模型的组成: 字段(基础字段和关系字段), META选项和方法。我还没有介绍模型的继承及模型特殊字段(比如Choices枚举类型)，这些我们将放在Django进阶笔记的模型进阶部分。查询下章我们将重点介绍如何使用这些API语句操作我们的模型，对数据表里的数据进行增删查改。
 
 原创不易，转载请注明来源。我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 

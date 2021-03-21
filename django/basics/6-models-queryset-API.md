@@ -1,7 +1,7 @@
 ---
 layout: default
 title: ORM数据查询接口
-parent: Django基础教程
+parent: 大江狗的Django入门笔记
 nav_order: 6
 ---
 
@@ -263,7 +263,7 @@ Article.objects.filter(n_comments__gt=F('n_pingbacks') * 2)
 
 ## 小结
 
-本章我们介绍了Django中常用的模型查询API，并以博客为例介绍了如何使用这些语句对数据库里的数据进行增删改查。我们还没有介绍更高级的跨表查询，比如`annotate`，`aggregate`,` select_related`和`prefech_related`方法，这些会放在Django高级教程部分的模型查询篇，请欢迎关注。
+本章我们介绍了Django中常用的模型查询API，并以博客为例介绍了如何使用基本语句对数据库里的数据进行增删改查。我们还没有介绍更高级的跨表聚合查询，比如`annotate`，`aggregate`,` select_related`和`prefech_related`方法，这些会放在Django进阶笔记部分的数据查询篇，请欢迎关注。
 
 原创不易，转载请注明来源。我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 

@@ -1,11 +1,11 @@
 ---
 layout: default
 title: 路由
-parent: Django基础教程
+parent: 大江狗的Django入门笔记
 nav_order: 7
 ---
 
-# Django 路由配置URLconf
+# 路由配置
 {: .no_toc }
 
 ## 目录

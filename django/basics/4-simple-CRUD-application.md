@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 一个CRUD小应用
-parent: Django基础教程
+parent: 大江狗的Django入门笔记
 nav_order: 4
 ---
 
