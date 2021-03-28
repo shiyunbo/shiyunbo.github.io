@@ -1,11 +1,11 @@
 ---
 layout: default
-title: 视图
+title: Django函数视图及通用类视图
 parent: 大江狗的Django入门教程
 nav_order: 8
 ---
 
-# 视图
+# Django函数视图及通用类视图
 {: .no_toc }
 
 ## 目录

@@ -127,6 +127,92 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 不过需要注意的是`SerializerMethodField`通常用于显示模型中原本不存在的字段，类似可读字段，你不能通过反序列化对其直接进行修改。
 
+### 使用 to_representation方法
+
+`to_representation()` 允许我们改变序列化的输出内容, 给其添加额外的数据。
+
+假设我们有如下一个文章模型(Article)：
+
+
+```python
+from django.contrib.auth.models import User
+from django.db import models
+
+class Article(models.Model):
+    title = models.CharField(max_length=256)
+    body = models.TextField()
+    liked_by = models.ManyToManyField(to=User)
+    
+    def __str__(self):
+        return self.title
+```
+每个文章资源有 `title`, `body`和` liked_by`  三个字段。`liked_by` 代表喜欢该文章的用户对象id列表。
+
+我们的序列化器`ArticleSerializer`类如下所示：
+
+```python
+from rest_framework import serializers
+from .models import Article
+
+class ArticleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = '__all__'
+```
+
+
+如果我们使用上面序列化器去序列化单篇文章资源，我们将得到如下输出数据：
+
+```json
+{
+   "id": 1,
+   "title": "DRF advanced tutorials",
+   "body": "This is a good example.",
+   "liked_by": [
+      2,
+      3,
+      4
+   ]
+}
+```
+
+
+现在如果我们希望给上面输出数据添加一个`total_likes`点赞总数的字段，我们只需要在序列化器类里重写`to_representation`方法。
+
+```python
+from rest_framework import serializers
+from .models import Article
+
+
+class ArticleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = '__all__'
+        
+    def to_representation(self, value):
+        # 调用父类获取当前序列化数据，value代表每个对象实例ob
+        data = super().to_representation(value)
+        # 对序列化数据做修改，添加新的数据
+        data['total_likes'] = value.liked_by.count()
+        return data
+```
+
+现在使用新的序列化器类去序列化单篇文章资源，我们将得到如下输出结果。`to_representation() `方法改变了我们序列化的输出，并传递了额外的数据。
+
+```json
+{ 
+   "id": 1,
+   "title": "DRF advanced tutorials",
+   "body": "This is a good example.",
+   "liked_by": [
+      2,
+      3,
+      4
+   ],
+   "total_likes": 3
+}
+```
+
 ### 使用嵌套序列化器
 
 我们文章中的author字段实际上对应的是一个User模型实例化后的对象，既不是一个整数id，也不是用户名这样一个简单字符串，我们怎样显示更多用户对象信息呢? 其中一种解决方法是使用嵌套序列化器，如下所示：
@@ -363,7 +449,7 @@ class UserViewSet(CreateModelMixin,
 
 ## 小结
 
-- 改变序列化输出数据的格式可以通过指定字段的source来源，使用SerializerMethodField自定义方法以及使用嵌套序列化器。
+- 改变序列化输出数据的格式可以通过指定字段的source来源，使用SerializerMethodField和to_representation方法以及使用嵌套序列化器。
 - 反序列化时需要对客户端发送的数据进行验证。你可以通过自定义validate方法进行字段或对象级别的验证，你还可以使用自定义的validators或DRF自带的验证器。
 - 当你使用嵌套序列化器后，多个关联模型的创建和更新的行为并不明确，你需要显示地重写create和update方法。
 

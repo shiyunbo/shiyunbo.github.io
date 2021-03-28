@@ -1,11 +1,11 @@
 ---
 layout: default
-title: 表单
+title: Django表单设计、验证与使用
 parent: 大江狗的Django入门教程
-nav_order: 11
+nav_order: 10
 ---
 
-# 表单
+# Django表单设计、验证与使用
 {: .no_toc }
 
 ## 目录

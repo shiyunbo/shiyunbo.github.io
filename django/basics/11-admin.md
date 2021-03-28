@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Admin
+title: Django管理后台(Admin)入门
 parent: 大江狗的Django入门教程
 nav_order: 11
 ---
 
-# Admin
+# Django管理后台(Admin)入门
 {: .no_toc }
 
 ## 目录

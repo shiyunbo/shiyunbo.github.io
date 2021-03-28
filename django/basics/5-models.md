@@ -1,11 +1,11 @@
 ---
 layout: default
-title: 模型
+title: Django模型详解
 parent: 大江狗的Django入门教程
 nav_order: 5
 ---
 
-# 模型
+# Django模型详解
 {: .no_toc }
 
 ## 目录

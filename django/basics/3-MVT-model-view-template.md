@@ -1,11 +1,11 @@
 ---
 layout: default
-title: MVT设计模式
+title: Django的MVT设计模式
 parent: 大江狗的Django入门教程
-nav_order: 3
+nav_order:3
 ---
 
-# MVT设计模式
+# Django的MVT设计模式
 {: .no_toc }
 
 ## 目录

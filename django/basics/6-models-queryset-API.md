@@ -1,11 +1,11 @@
 ---
 layout: default
-title: ORM数据查询接口
+title: Django ORM数据增删改查接口
 parent: 大江狗的Django入门教程
 nav_order: 6
 ---
 
-# Django ORM数据查询接口
+# Django ORM数据增删改查接口
 {: .no_toc }
 
 ## 目录

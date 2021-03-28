@@ -8,6 +8,6 @@ permalink: /django/advanced-tutorials
 
 # Django进阶教程
 
-大江狗原创Django进阶教程，适合Django进阶的Python Web开发者，帮你加深对Django的理解，也可以作为开发参考资料。
+大江狗原创Django进阶教程，适合Django进阶的Python Web开发者，帮你加深对Django的理解，也可以作为开发参考资料。持续更新中......欢迎关注！
 {: .fs-6 .fw-300 }
 
