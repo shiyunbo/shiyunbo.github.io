@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  Django项目中如何使用分页及通用模板
+title:  Django分页及通用模板
 parent: 大江狗的Django入门教程
 nav_order: 14
 ---

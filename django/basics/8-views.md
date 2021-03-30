@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Django函数视图及通用类视图
+title: Django视图及通用类视图
 parent: 大江狗的Django入门教程
 nav_order: 8
 ---

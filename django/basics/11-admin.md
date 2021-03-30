@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Django管理后台(Admin)入门
+title: Django管理后台(Admin)
 parent: 大江狗的Django入门教程
 nav_order: 11
 ---

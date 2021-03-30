@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Django表单设计、验证与使用
+title: Django表单设计与使用
 parent: 大江狗的Django入门教程
 nav_order: 10
 ---

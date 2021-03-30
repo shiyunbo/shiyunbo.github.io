@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  Django项目中Cookie和Session应用场景及案例
+title:  Django项目中Cookie和Session应用
 parent: 大江狗的Django入门教程
 nav_order: 13
 ---

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Django模板语言、常用标签与过滤器
+title: Django模板语言与标签
 parent: 大江狗的Django入门教程
 nav_order: 9
 ---
