@@ -405,7 +405,7 @@ UpdateView和CreateView很类似，比如默认模板都是`model_name_form.html
 
 你可以通过重写`template_name`和`form_class`来完成UpdateView的自定义。
 
-- 本例中默认的模板是article_form.html, 你可以改为article_update_form.html。
+- 本例中默认的模板是`article_form.html`, 你可以改为`article_update_form.html`。
 - 虽然form_valid方法不是必需，但很有用。当用户提交的数据是有效的时候，你可以通过定义此方法做些别的事情，比如发送邮件，存取额外的数据。
 
 ```python
@@ -422,7 +422,7 @@ class ArticleUpdateView(UpdateView):
        form.do_sth()
        return super(ArticleUpdateView, self).form_valid(form)
 ```
-另一个进行UpdateView的常用自定义方法是`get_object`方法。比如你希望一个用户只能编辑自己发表的文章对象。当用户查看别人的对象时，返回http 404错误。这时候你可以通过更具体的get_object()方法来返回一个更具体的对象。代码如下:
+另一个进行UpdateView的常用自定义方法是`get_object`方法。比如你希望一个用户只能编辑自己发表的文章对象。当一个用户尝试编辑别人的文章时，返回http 404错误。这时候你可以通过更具体的`get_object()`方法来返回一个更具体的对象。代码如下:
 
 ```python
 from django.views.generic.edit import UpdateView

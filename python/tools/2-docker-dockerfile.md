@@ -183,17 +183,17 @@ $ docker stats
 | 命令                | 描述                                    | 示例                                          |
 | ------------------- | --------------------------------------- | --------------------------------------------- |
 | FROM                | 指定基础镜像                            | FROM python:3.8.3-alpine            |
-| MAINTAINER          | 维护人                                  | MAINTAINER  大江狗                   |
-| COPY       | 复制当前文件或目录 | COPY .  /html/myapp |
-| ADD | 复制文件并自动解压 | ADD myfile.tar /html/myapp |
+| MAINTAINER          | 镜像创建者                             | MAINTAINER  大江狗                   |
+| COPY       | 添加宿主机文件到容器，复制 | COPY .  /html/myapp |
+| ADD | 添加宿主机文件到容器，复制+解压 | ADD myfile.tar /html/myapp |
 | RUN            | 创建镜像时要执行的命令                  | RUN pip install -r requirements.txt |
 | USER           | 切换执行后续命令的用户和用户组, 但这个用户必需首先已使用RUN的命令进行创建好了。 | RUN groupadd -r redis && useradd -r -g redis redis; USER redis(切换用户) |
 | WORKDIR        | 指定工作目录                            | WORKDIR /html/myapp                           |
-| CMD            | 给启动的容器指定默认要运行的程序。运行 docker run 时如果使用了 --entrypoint 选项，将覆盖 CMD 指令指定的程序。 | CMD ["/bin/bash"] |
+| CMD            | 容器启动时默认要运行的程序。如果执行 docker run 后面跟启动命令会被覆盖掉。 | CMD ["/bin/bash"] |
 | ENV                 | 设置环境变量                            | ENV APP_HOME /html/myapp  |
-| ENTRYPOINT          | 容器启动时指定运行程序的入口点。同CMD，但其不会被覆盖，可以和docker run命令传递的参数进行拼接执行。 | 如果设置：ENTRYPOINT ["nginx", "-c"] ， 运行`$ docker run  mynginx_1 -c /etc/nginx/myweb.conf`将默认执行命令：`nginx -c /etc/nginx/myweb.conf`。 |
+| ENTRYPOINT          | 同CMD，但其不会被覆盖，可以和docker run命令传递的参数进行拼接执行。 | 如果设置：ENTRYPOINT ["nginx", "-c"] ， 运行`$ docker run  mynginx_1 -c /etc/nginx/myweb.conf`将默认执行命令：`nginx -c /etc/nginx/myweb.conf`。 |
 | VOLUME              | 定义匿名数据卷。在启动容器时忘记挂载数据卷，会自动挂载到匿名卷。 | VOLUME /tmp |
-| EXPOSE              | 暴露容器端口，端口会暴露给link到当前容器或通过网络连接的容器，不会和宿主机端口映射关系。 | EXPOSE 8080 |
+| EXPOSE              | 容器暴露端口，供link到当前容器或通过docker network的容器，不会和宿主机端口映射关系。 | EXPOSE 8080 |
 
 ## Docker网络操作
 
@@ -257,6 +257,6 @@ $ docker network rm mysite1-network
 
 本文介绍了Linux系统下如何安装Docker，并对Docker操作镜像、容器和网络的命令以及Dockerfile进行了详细总结。下篇文章中我们将对Docker-compose的安装，主要命令以及docker-compose.yml配置文件进行详细介绍。
 
-原创不易，转载请注明来源。我是大江狗，一名Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
+原创不易，转载请注明来源。我是大江狗，一名Python Web开发与Django技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 
 ![Python Web与Django开发](../../assets/images/django.png)

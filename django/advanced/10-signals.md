@@ -83,15 +83,15 @@ def cache_post_delete_handler(sender, **kwargs):
 
 前面例子我们仅仅使用了`post_save`和`post_delete`信号。Django还内置了其它常用信号：
 
-- django.db.models.signals.pre_save & post_save: 在模型调用 save()方法之前或之后发送。
+- pre_save & post_save: 在模型调用 save()方法之前或之后发送。
+- pre_init& post_init: 在模型调用_init_方法之前或之后发送。
+- pre_delete & post_delete: 在模型调用delete()方法或查询集调用delete() 方法之前或之后发送。
+- m2m_changed: 在模型多对多关系改变后发送。
+- request_started & request_finished: Django建立或关闭HTTP 请求时发送。
 
-- django.db.models.signals.pre_init& post_init: 在模型调用_init_方法之前或之后发送。
+这些信号都非常有用。举个例子：使用`pre_save`信号可以在将用户的评论存入数据库前对其进行过滤，或则检测一个模型对象的字段是否发生了变更。
 
-- django.db.models.signals.pre_delete & post_delete: 在模型调用delete()方法或查询集调用delete() 方法之前或之后发送。
-
-- django.db.models.signals.m2m_changed: 在模型多对多关系改变后发送。
-
-- django.core.signals.request_started & request_finished: Django建立或关闭HTTP 请求时发送。
+**注意**：监听`pre_save`和`post_save`信号的回调函数不能再调用`save()`方法，否则回出现死循环。另外Django的`update`方法不会发出`pre_save`和`post_save`的信号。
 
 ## 如何放置信号监听函数代码
 在之前案例中，我们将Django信号的监听函数写在了`models.py`文件里。当一个app的与信号相关的自定义监听函数很多时，此时models.py代码将变得非常臃肿。一个更好的方式把所以自定义的信号监听函数集中放在app对应文件夹下的`signals.py`文件里，便于后期集中维护。
@@ -138,12 +138,12 @@ Django的内置信号在大多数情况下能满足我们的项目需求，但�
 
 ### 第一步：自定义信号
 
-每个自定义的信号，都是Signal类的实例。这里我们定义了一个名为`my_signal`的信号，它包含有`msg`这个参数，这个参数在信号触发的时候需要传递。当监听函数收到这个信号时，会得到`msg`参数的值。
+每个自定义的信号，都是Signal类的实例。这里我们首先在app目录下新建一个`signals.py`文件，创建一个名为`my_signal`的信号，它包含有`msg`这个参数，这个参数在信号触发的时候需要传递。当监听函数收到这个信号时，会得到`msg`参数的值。
 
 ```python
 from django.dispatch import Signal
 
-my_custom_signal = Signal(providing_args=['msg'])
+my_signal = Signal(providing_args=['msg'])
 ```
 
 ### 第二步：触发信号

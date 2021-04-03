@@ -8,8 +8,7 @@ category: Django
 广受欢迎的原创Django REST Framework系列教程终于一点一点从微信公众号上搬到本博客了。
 
 阅读地址：
-
-https://pythondjango.cn/django/rest-framework-tutorials
+- [大江狗的Django REST Framework教程](https://pythondjango.cn/django/rest-framework-tutorials)
 
 离整个系列完结还差4-5篇文章，我会继续努力的，争取在上半年更新完毕。新文章会在本博客和微信公众号【Python Web与Django开发】同步首发。
 

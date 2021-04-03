@@ -295,9 +295,13 @@ class MyClassMiddleware:
  
     def process_exception(self, request, exception):
         return None or HttpResponse(xx)
+        # 例子: 打印出异常
+        return HttpResponse(<h1>str(exception)</h1)
     
+    # 该方法仅对TemplateResponse输入有用，对render方法失效
     def process_template_response(self, request, response)
-        return ...
+        response.context_data['title'] = 'New title'
+        return response
 ```
 
 ## 小结
