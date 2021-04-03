@@ -24,6 +24,7 @@ Nginx的安装很简单，网上教程很多，这里仅以Ubuntu系统(Linux)�
 ```bash
 # 安装nginx
 sudo apt-get install nginx
+
 # 启动nginx服务
 sudo systemctl nginx start
 ```
@@ -31,12 +32,16 @@ Nginx启动时通常会使用默认设置, 使用如下命令可以让自己的�
 ```bash
 # 删除/etc/nginx/sites-available/目录下默认自定义配置
 sudo rm -rf /etc/nginx/sites-available/default
+
 # sites-available目录下新建自定义配置文件,可以1个网站1个
 sudo nano /etc/nginx/sites-available/myapp1
+
 # 与sites-enabled目录建立软链，可让自定义配置文件生效
 sudo ln -s /etc/nginx/sites-available/myapp1 /etc/nginx/sites-enabled
+
 # 检查nginx配置文件是否有问题
 sudo systemctl nginx –t
+
 # 重启nginx服务
 sudo systemctl nginx restart
 ```
@@ -73,6 +78,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 ```bash
 # 全局块
+user www-data;
 worker_processes  2;  ## 默认1，一般建议设成CPU核数1-2倍
 error_log  logs/error.log; ## 错误日志路径
 pid  logs/nginx.pid; ## 进程id
@@ -295,8 +301,8 @@ http {
     # 开启gzip压缩功能
     gzip on;
     
-    # 设置允许压缩的页面最小字节数; 这里表示如果文件小于5k，压缩没有意义.
-    gzip_min_length 5k; 
+    # 设置允许压缩的页面最小字节数; 这里表示如果文件小于10k，压缩没有意义.
+    gzip_min_length 10k; 
     
     # 设置压缩比率，最小为1，处理速度快，传输速度慢；
     # 9为最大压缩比，处理速度慢，传输速度快; 推荐6
@@ -305,7 +311,7 @@ http {
     # 设置压缩缓冲区大小，此处设置为16个8K内存作为压缩结果缓冲
     gzip_buffers 16 8k; 
     
-    # 制定哪些文件需要压缩,线上配置可尽可能配置多的压缩类型!
+    # 设置哪些文件需要压缩,一般文本，css和js建议压缩。图片视需要要锁。
     gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript; 
     
 } 
@@ -340,6 +346,63 @@ server {
             add_header Content-Disposition 'attachment';
         }
     }
+}
+```
+## Nginx配置HTTPS
+
+```
+# 负载均衡，设置HTTPS
+upstream backend_server {
+    server APP_SERVER_1_IP;
+    server APP_SERVER_2_IP;
+}
+
+# 禁止未绑定域名访问，比如通过ip地址访问
+# 444:该网页无法正常运作，未发送任何数据
+server {
+    listen 80 default_server;
+    server_name _;
+    return 444;
+}
+
+# HTTP请求重定向至HTTPS请求
+server {
+    listen 80;
+    listen [::]:80;
+    server_name your_domain.com;
+    
+    location / {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_pass http://backend_server; 
+     }
+    
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name your_domain.com;
+
+    # ssl证书及密钥路径
+    ssl_certificate /path/to/your/fullchain.pem;
+    ssl_certificate_key /path/to/your/privkey.pem;
+
+    # SSL会话信息
+    client_max_body_size 75MB;
+    keepalive_timeout 10;
+
+    location / {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_pass http://django; # Django+uwsgi不在本机上，使用代理转发
+    }
+
 }
 ```
 
@@ -397,7 +460,7 @@ tcp_nodelay on;
 
 # 客户端请求头部的缓冲区大小，这个可以根据你的系统分页大小来设置。
 # 一般一个请求头的大小不会超过 1k，不过由于一般系统分页都要大于1k
-client_header_buffer_size 4k;
+client_header_buffer_size 2k;
 
 # 这个将为打开文件指定缓存，默认是没有启用的。
 # max指定缓存数量，建议和打开文件数一致，inactive 是指经过多长时间文件没被请求后删除缓存。
@@ -455,7 +518,7 @@ server {
    access_log      logs/big.server.access.log main;
     
    charset utf-8;
-    client_max_body_size 10M; # 限制用户上传文件大小，默认1M
+   client_max_body_size 10M; # 限制用户上传文件大小，默认1M
 
    location / {
      # 使用proxy_pass转发请求到通过upstream定义的一组应用服务器
@@ -522,47 +585,95 @@ upstream backend_server {
 
 在前面的案例中，Nginx都是使用`proxy_pass`转发的动态请求，`proxy_pass`使用普通的HTTP协议与应用服务器进行沟通。如果你部署的是Python Web应用(Django, Flask), 你的应用服务器(`uwsgi`, `gunicorn`)一般是遵守uwsgi协议的，对于这种情况，建议使用`uwsgi_pass`转发请求。
 
-如果你部署的是Django或则Flask Web应用，可以参考的nginx配置文件如下所示：
+### Python Web应用部署负载均衡Nginx配置文件参考
+
+如果你部署的是Django或则Flask Web应用，一个完整的nginx配置文件如下所示：
 
 ```bash
 # nginx配置文件，nginx.conf
 
-upstream uwsgi_web {
-    server 192.168.0.1:8000;
-    server 192.168.0.2:8000;
+# 全局块
+user www-data;
+worker_processes  2;  ## 默认1，一般建议设成CPU核数1-2倍
+
+# Events块
+events {
+  # 使用epoll的I/O 模型处理轮询事件。
+  # 可以不设置，nginx会根据操作系统选择合适的模型
+  use epoll;
+  
+  # 工作进程的最大连接数量, 默认1024个
+  worker_connections  2048;
+  
+  # http层面的keep-alive超时时间
+  keepalive_timeout 60;
+  
 }
 
-server {
-    listen 80; # 监听80端口
-    server_name localhost; # 可以是nginx容器所在ip地址或127.0.0.1，不能写宿主机外网ip地址
-
-    charset utf-8;
-    client_max_body_size 10M; # 限制用户上传文件大小
+http {    
+    # 开启gzip压缩功能
+    gzip on;
     
-    access_log /var/log/nginx/access.log main;
-    error_log /var/log/nginx/error.log warn;
-
-    location /static {
-        alias /usr/share/nginx/html/static; # 静态资源路径
+    # 设置允许压缩的页面最小字节数; 这里表示如果文件小于10k，压缩没有意义.
+    gzip_min_length 10k; 
+    
+    # 设置压缩比率，最小为1，处理速度快，传输速度慢；
+    # 9为最大压缩比，处理速度慢，传输速度快; 推荐6
+    gzip_comp_level 6; 
+    
+    # 设置压缩缓冲区大小，此处设置为16个8K内存作为压缩结果缓冲
+    gzip_buffers 16 8k; 
+    
+    # 设置哪些文件需要压缩,一般文本，css和js建议压缩。图片视需要要锁。
+    gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript; 
+    
+    
+    upstream backend_server {
+        server 192.168.0.1:8000; # 替换成应用服务器或容器实际IP及端口
+        server 192.168.0.2:8000;
     }
 
-    location /media {
-        alias /usr/share/nginx/html/media; # 媒体资源，用户上传文件路径
-    }
+    server {
+        listen 80; # 监听80端口
+        server_name localhost; # 可以是nginx容器所在ip地址或127.0.0.1，不能写宿主机外网ip地址
 
-    location / {     
-        include /etc/nginx/uwsgi_params;
-        uwsgi_pass uwsgi_web;   # 使用uwsgi_pass, 而不是proxy_pass
-        uwsgi_read_timeout 600; # 指定接收uWSGI应答的超时时间
-        uwsgi_connect_timeout 600;  # 指定连接到后端uWSGI的超时时间。
-        uwsgi_send_timeout 600; # 指定向uWSGI传送请求的超时时间
+        charset utf-8;
+        client_max_body_size 10M; # 限制用户上传文件大小
+        
+         # 客户端请求头部的缓冲区大小
+        client_header_buffer_size 2k;
+        client_header_timeout 15;
+        client_body_timeout 15;
+    
+        access_log /var/log/nginx/mysite1.access.log main;
+        error_log /var/log/nginx/mysite1.error.log warn;
+        
+        # 静态资源路径
+        location /static {
+            alias /usr/share/nginx/html/static; 
+        }
+        
+        # 媒体资源路径，用户上传文件路径
+        location /media {
+            alias /usr/share/nginx/html/media;
+        }
 
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $http_host;
-        proxy_redirect off;
-        proxy_set_header X-Real-IP  $remote_addr;
+        location / {     
+            include /etc/nginx/uwsgi_params;
+            uwsgi_pass backend_server;   # 使用uwsgi_pass, 而不是proxy_pass
+            uwsgi_read_timeout 600; # 指定接收uWSGI应答的超时时间
+            uwsgi_connect_timeout 600;  # 指定连接到后端uWSGI的超时时间。
+            uwsgi_send_timeout 600; # 指定向uWSGI传送请求的超时时间
+
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_redirect off;
+            proxy_set_header X-Real-IP  $remote_addr;
+        }
     }
-}
+    
+} 
+
 
 ```
 
@@ -575,24 +686,24 @@ location / {
 }
 ```
 
-**注意**：取决于Nginx采用那种方式与uWSGI服务器进行通信(本地socket, 网络socket和http协议)，uWSGI的配置文件也会有所不同。这里以`uwsgi.ini`为例展示了不同。
+**注意**：取决于Nginx采用那种方式与uWSGI服务器进行通信(本地socket, 网络TCP socket和http协议)，uWSGI的配置文件也会有所不同。这里以`uwsgi.ini`为例展示了不同。
 
 ```bash
 # uwsgi.ini配置文件
 
-# 对于uwsgi_pass转发的请求，使用本地socket通信
+# 对于uwsgi_pass转发的请求，使用本地unix socket通信
 # 仅适用于nginx和uwsgi在同一台服务器上的情形
 socket=/run/uwsgi/django_test1.sock
 
-# 对于uwsgi_pass转发的请求，使用网络socket通信
+# 对于uwsgi_pass转发的请求，使用TCP socket通信
 socket=0.0.0.0:8000
 
-# 对于proxy_pass通过HTTP转发的请求，使用http协议
+# 对于proxy_pass HTTP转发的请求，使用http协议
 http=0.0.0.0:8000
 ```
 
 ## 小结
-本文总结了Nginx常用配置选项，包括url匹配优先级、请求转发、日志配置、超时配置、静态文件处理以及负载均衡的各项算法。拿去吧，不谢！
+本文总结了Nginx常用配置选项，包括url匹配优先级、请求转发、日志配置、超时配置、静态文件处理以及负载均衡的各项算法。下篇我们将专门介绍Nginx的好搭档，负责接收动态请求的uWSGI Web服务器。
 
 我是大江狗，一名Python Web技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 
