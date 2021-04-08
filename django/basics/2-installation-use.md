@@ -127,7 +127,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('demo/', include('demo.urls')) # 加入app对应urls
+    path('', include('demo.urls')) # 加入app对应urls
 ]
 ```
 
@@ -150,12 +150,12 @@ def index(request):
 ```python
 # demo/urls.py
 
-from django.urls import re_path
+from django.urls import path
 from . import views
 
 app_name = "demo"
 urlpatterns = [
-    re_path(r'^index/$', views.index, name='index'),
+    path('index/', views.index, name='index'),
 ]
 ```
 
