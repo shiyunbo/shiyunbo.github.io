@@ -221,7 +221,7 @@ TEMPLATES = [{
 ```
 
 ## 静态文件
-压缩 HTML、CSS 和 JavaScript等静态文件可以节省带宽和传输时间。Django 自带的压缩工具有`GzipMiddleware` 中间件和 `{%spaceless%}` 模板 Tag。使用Python压缩静态文件会影响性能，一个更好的方法是通过 Apache、Nginx 等服务器来对输出内容进行压缩。例如Nginx服务器支持`gzip`压缩，同时可以通过`expires`选项设置静态文件的缓存时间。
+压缩 HTML、CSS 和 JavaScript等静态文件可以节省带宽和传输时间。Django 自带的压缩工具有`GzipMiddleware` 中间件和 `spaceless` 模板 Tag。使用Python压缩静态文件会影响性能，一个更好的方法是通过 Apache、Nginx 等服务器来对输出内容进行压缩。例如Nginx服务器支持`gzip`压缩，同时可以通过`expires`选项设置静态文件的缓存时间。
 
 更多关于Nginx的配置见：
 
