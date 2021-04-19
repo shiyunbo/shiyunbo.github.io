@@ -212,13 +212,14 @@ class MyView(PermissionRequiredMixin, View):
 我们如果判断当前用户是否拥有blog应用下发表文章讨论的权限，则使用:
 
 ```python
-{{ perms.blog.comment_article }}{% endraw %}
+{% raw %}{{ perms.blog.comment_article }}{% endraw %}
 ```
 
 
 这样结合template的if标签，我们可以通过判断当前用户所具有的权限，显示不同的内容了.
 
 ```html
+{% raw %}
 {% if perms.blog %}
     <p>You have permission to do something in this blog app.</p>
 	{% if perms.blog.add_article %}
@@ -230,7 +231,7 @@ class MyView(PermissionRequiredMixin, View):
     {% endif %}
 {% else %}
     <p>You don't have permission to do anything in the blog app.</p>
-{% endif %}
+{% endif %}{% endraw %}
 ```
 
 ### 用户组(Group)
@@ -245,7 +246,6 @@ mygroup.permissions.add(permission1, permission2, ...)
 mygroup.permissions.remove(permission1, permission2, ...)
 mygroup.permissions.clear()
 ```
-
 
 如果你要将某个用户移除某个用户组，可以使用如下方法:
 
