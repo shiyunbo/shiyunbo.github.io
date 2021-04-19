@@ -1,5 +1,5 @@
 ---
-layout: default
+ayout: default
 title: Queryset特性及高级查询技巧
 parent: 大江狗的Django进阶教程
 nav_order: 6

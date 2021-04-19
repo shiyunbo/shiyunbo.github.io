@@ -239,6 +239,27 @@ sudo rm /usr/bin/python
 sudo ln -s /usr/bin/python3.9 /usr/bin/python
 ```
 
+## Vim命令
+
+```bash
+sudo vim file1
+# 默认进入普通模式，可以移动光标，删除文本等等
+# 连续两次dd删除当前行
+
+# 进入编辑模式：按”a”（append／追加）键或者”i”（insert／插入）
+# 模式切换：ESC 键回到普通模式
+# 退出保存: 按ESC键, :wq
+
+i —— 插入模式，这个模式让你你可以像记事本一样的输入文本，如果已经输入完了，按ESC返回Normal模式。
+x —— 删除当前光标所在处的字符
+:w —— 存盘
+:q —— 退出，你可以使用 :wq来同时进行这两个操作
+dd —— 剪切当前行
+p —— 粘贴
+hjkl —— 效果等同于←↓↑→，用于移动光标
+:help<command> —— 显示相关命令的帮助
+```
+
 ## 参考资料
 
 - https://blog.csdn.net/yueyueniaolzp/article/details/81133122

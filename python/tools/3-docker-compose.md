@@ -173,6 +173,8 @@ $ docker-compose rm web 
 $ docker-compose top                            
 ```
 
+
+
 ## 小结
 
 本章介绍了如何安装Docker-compose，并对`docker-compose.yml`配置文件及常用命令进行详细总结和演示。关于Docker的命令大全和Dockerfile详解，请看前一篇文章。

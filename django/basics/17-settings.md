@@ -2,7 +2,7 @@
 layout: default
 title:  Django配置文件
 parent: 大江狗的Django入门教程
-nav_order: 15
+nav_order: 17
 ---
 
 # Django配置文件

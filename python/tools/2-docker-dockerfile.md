@@ -253,6 +253,22 @@ $ docker network disconnet mysite1-network docker-web
 $ docker network rm mysite1-network
 ```
 
+## Docker数据卷操作
+
+```bash
+# 列出所有数据卷
+$ docker volume ls
+# 使用过滤，列出所有未使用的数据卷
+$ docker volume ls --filter dangling=true
+# 删除一个数据卷
+# 容器正在使用的数据卷不能删除，绑定挂载的无法删除。
+$ docker volume rm <volume_name>
+
+
+```
+
+
+
 ## 小结
 
 本文介绍了Linux系统下如何安装Docker，并对Docker操作镜像、容器和网络的命令以及Dockerfile进行了详细总结。下篇文章中我们将对Docker-compose的安装，主要命令以及docker-compose.yml配置文件进行详细介绍。

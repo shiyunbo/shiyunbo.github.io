@@ -208,6 +208,13 @@ $ git checkout -b <分支名称>
 # 创建+切换到指定的分支，删除所有的提交记录
 $ git checkout --orphan <分支名称>
 ```
+分支命令时一定要注意遵循一定规范，常见的分支名有：
+
+- main: 主分支
+- dev: 开发分支
+- hotfix : 紧急修复主分支的bug，可以按issue编号命令，如hotfix/#1，方便与main主分支合并
+- feature : 按照功能点命名 feature/新增功能，如 feature/add_search。
+
 ## 标签管理
 
 ```bash
@@ -234,6 +241,50 @@ $ git push <远程仓库的别名> <标签名称>
 
 # 将本地所有的标签全部提交到远程仓库
 $ git push <远程仓库的别名> –tags
+```
+
+## Git常见使用场景
+
+```bash
+# 服务器上首次安装git并通过SSH连接github
+$ sudo apt-get install git # ubuntu系统
+$ git config --global user.name "Your name here"
+$ git config --global user.email "your_email@example.com"
+$ ssh-keygen -t rsa -C "your_email@example.com"
+# 打开隐藏.ssh/id_rsa.pub，复制key
+# 打开Github Account Settings > Add SSH Key
+$ ssh -T git@github.com
+
+# 开发分支（dev）上的代码达到上线的标准后，要合并到main分支
+$ git checkout dev
+$ git pull
+$ git checkout main
+$ git merge dev
+$ git push -u origin main
+
+# 当master代码改动了，需要更新开发分支（dev）上的代码
+$ git checkout main
+$ git pull 
+$ git checkout dev
+$ git merge main
+$ git push -u origin dev
+
+# 放弃本地修改，使用远程仓库代码强制覆盖本地命令
+$ git fetch --all
+$ git reset --hard origin/main
+$ git pull
+
+# 多分支实现小的功能改动
+$ git checkout -b feature/add_search dev # 创建两个分支feature和dev
+$ git add somefile # 做出小的修改
+$ git commit -m 'msg' # 提交修改
+$ git checkout dev # 切换到开发分支
+$ git pull # 拉取远程代码与本地dev分支合并
+$ git merge feature/add_search # 将minor_feature与dev分支合并
+$ git push # 提交到远程仓库dev分支
+$ git checkout main # 切换到main分支
+$ git merge dev # 将dev与main分支合并
+$ git push # 提交到远程仓库main分支
 ```
 
 ## 参考资料
