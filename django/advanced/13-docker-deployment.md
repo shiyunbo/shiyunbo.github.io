@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  Django国际化
+title:  Docker部署Django
 parent: 大江狗的Django进阶教程
 nav_order: 13
 ---
@@ -14,9 +14,10 @@ nav_order: 13
 1. TOC
 {:toc}
 
-Django在生产环境的部署还是比较复杂的, 令很多新手望而生畏, 幸运的是使用Docker容器化技术可以大大简化我们Django在生产环境的部署并提升我们应用的可移植性。*Docker* 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的镜像中，然后发布到任何流行的 Linux机器上。本文将介绍使用docker-compose八步部署Django + Uwsgi + Nginx + MySQL + Redis (多容器组合)，支持Django 3.2、MySQL 8和Python 3.9。
+Django在生产环境的部署还是比较复杂的, 令很多新手望而生畏, 幸运的是使用Docker容器化技术可以大大简化我们Django在生产环境的部署并提升我们应用的可移植性。*Docker* 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的镜像中，然后发布到任何流行的 Linux机器上。本文将详细介绍如何使用docker-compose八步部署Django + Uwsgi + Nginx + MySQL + Redis (多容器组合)。
+{: .fs-6 .fw-300 }
 
-本文假设Django, MySQL, Redis和Nginx都是部署到同一台服务器上，很多配置文件有非常大的参考价值，建议先收藏再阅读。
+本文假设Django, MySQL, Redis和Nginx都是部署到同一台服务器上，支持最新Django 3.2、MySQL 8和Python 3.9版本，其中很多配置文件有非常大的参考价值，建议先收藏再阅读。
 
 注意：本文侧重于Docker技术在部署Django时的实际应用，而不是Docker基础教程。对Docker命令不熟悉的读者们建议先学习下Python Web工具篇的Docker及Docker-compose基础命令。
 

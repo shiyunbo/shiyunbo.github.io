@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Queryset特性及高级查询技巧
+title: Django性能优化大全
 parent: 大江狗的Django进阶教程
 nav_order: 14
 ---
 
-# Queryset特性及高级查询技巧
+# Django性能优化大全
 {: .no_toc }
 
 ## 目录

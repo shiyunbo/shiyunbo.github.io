@@ -19,7 +19,7 @@ nav_order: 4
 很多人说Web后台开发人员每天的工作就是对数据库数据进行增删改查(CRUD)，可见CRUD开发的重要性。今天我将利用Django基于函数的视图编写一个任务管理小应用，实现创建(**Create**)一个任务，查看(**Retrieve**)任务清单和单个任务详情，更新(**Update**)一个任务和删除(**Delete**)一个任务。
 {: .fs-6 .fw-300 }
 
-本例中我们只讲述核心逻辑，不浪费时间在前端样式上。演示效果如下所示：
+本例中我们只讲述核心逻辑，不浪费时间在前端样式上。文末有GitHub源码地址，里面同时包含了函数视图和基于类的视图, 具体演示效果如下所示：
 
 ![Django CRUD](2-installation-use.assets/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X2dpZi9idWFGTEZLaWNSb0RUQzlhMzBnRHNJamhyaDZVZW81UUFtdlQ0dWxKU2liczBxenFyV0I4dWhDZUlsdTJWTHdDQjRzRHVLY0VHOUF6Q0RHNmhWcVFpYU1LZy82NDA)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
@@ -249,11 +249,14 @@ INSTALLED_APPS = [
  python manage.py runserver
 ```
 
-项目源码地址：
+## GitHub源码地址
+
+本项目源码地址，里面同时包含了函数视图和基于类的视图。
 
 https://github.com/shiyunbo/django-crud-example
 
 ## 小结
+
 本例中我们使用了函数视图(functional-based views, FBV)编写了一个任务管理的CRUD小应用，后面我们将使用基于类的视图(class-based views, CBV)重写本例演示代码。
 
 接下来几章我们将详细介绍模型、视图、URL的配置以及模板的基础知识，欢迎关注。

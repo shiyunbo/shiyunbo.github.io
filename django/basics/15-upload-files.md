@@ -15,7 +15,7 @@ nav_order: 14
 {:toc}
 
 ---
-本章将介绍Django上传处理文件中需要考虑的重要事项，并提供通过自定义表单和ModelForm上传文件的示范代码。如果你的项目中需要用到文件上传，你可以从本文中获得灵感，简化你的开发。
+本章将介绍Django上传处理文件中需要考虑的重要事项，并提供通过自定义表单和ModelForm上传文件的示范代码（附GitHub地址)。如果你的项目中需要用到文件上传，你可以从本文中获得灵感，简化你的开发。
 {: .fs-6 .fw-300 }
 
 ## Django文件上传需要考虑的重要事项
@@ -338,6 +338,10 @@ def model_form_upload(request):
 ```
 
 模板跟前面一样，这里就不展示了。
+
+## GitHub源码地址
+
+- https://github.com/shiyunbo/django-file-upload-download
 
 ## 小结
 
