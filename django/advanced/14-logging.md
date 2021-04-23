@@ -2,7 +2,7 @@
 layout: default
 title:  Django日志管理
 parent: 大江狗的Django进阶教程
-nav_order: 11
+nav_order: 14
 ---
 
 # Django日志管理

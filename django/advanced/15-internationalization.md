@@ -2,7 +2,7 @@
 layout: default
 title:  Django国际化
 parent: 大江狗的Django进阶教程
-nav_order: 12
+nav_order: 15
 ---
 
 # Django国际化

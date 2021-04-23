@@ -2,7 +2,7 @@
 layout: default
 title: Django性能优化大全
 parent: 大江狗的Django进阶教程
-nav_order: 14
+nav_order: 17
 ---
 
 # Django性能优化大全

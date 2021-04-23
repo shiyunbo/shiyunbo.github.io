@@ -2,7 +2,7 @@
 layout: default
 title:  Docker部署Django
 parent: 大江狗的Django进阶教程
-nav_order: 13
+nav_order: 16
 ---
 
 # Docker部署Django
@@ -249,7 +249,7 @@ ADD . $APP_HOME
 RUN /usr/local/bin/python -m pip install --upgrade pip
 
 # 安装项目依赖
-RUN pip install -r requirements/production.txt
+RUN pip install -r requirements.txt
 
 # 移除\r in windows
 RUN sed -i 's/\r//' ./start.sh
