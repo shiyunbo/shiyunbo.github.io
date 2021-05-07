@@ -254,6 +254,8 @@ $ ssh-keygen -t rsa -C "your_email@example.com"
 # 打开隐藏.ssh/id_rsa.pub，复制key
 # 打开Github Account Settings > Add SSH Key
 $ ssh -T git@github.com
+# 阿里云连接github慢，取消GSSAPIAuthentication no的注释
+vim /etc/ssh/ssh_config
 
 # 开发分支（dev）上的代码达到上线的标准后，要合并到main分支
 $ git checkout dev

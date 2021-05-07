@@ -189,7 +189,7 @@ def my_view(request):
 ```
 
 
-如果你使用基于类的视图(Class Based View), 而不是函数视图，你需要继承`PermissionRequiredMixin`这个类，如下所示:
+如果你使用基于类的视图(Class Based View), 而不是函数视图，你需要混入`PermissionRequiredMixin`这个类或使用`method_decorator`装饰器，如下所示:
 
 ```python
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -198,6 +198,15 @@ class MyView(PermissionRequiredMixin, View):
     permission_required = 'polls.can_vote'
     # Or multiple of permissions:
     permission_required = ('polls.can_open', 'polls.can_edit')
+    
+from django.utils.decorators import method_decorator
+from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth.decorators import user_passes_test
+
+@method_decorator(user_passes_test(lambda u: Group.objects.get(name='admin') in u.groups.all()),name='dispatch')
+class ItemDelete(DeleteView):
+    model = Item
+    success_url = reverse_lazy('items:index')
 ```
 
 ### 模板中验证

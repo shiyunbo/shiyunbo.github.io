@@ -37,12 +37,13 @@ Ajax给后台发送数据的默认编码格式是urlencoded，比如`username=ab
 {% raw %}//手动构造数据data
 $("#btnSubmit").click(function () {
     $.ajax({
-        url: '/auth/', //也可以反向解析{% url 'login' %}
+        url: '/login/', //也可以反向解析{% url 'login' %}
         type: 'post',
         data: {
             'username': $("#id_username").val(),
             'password': $('#id_password').val()
         },
+        // 上面data为提交数据，下面data形参指代的就是异步提交的返回结果data
         success: function (data){
             
         }
@@ -55,9 +56,10 @@ $("#btnSubmit").click(function () {
 $("#btnSubmit").click(function () {
     let data = $("#loginForm").serialize();
     $.ajax({
-        url: "/auth/", //别忘了加斜杠
+        url: "/login/", //别忘了加斜杠
         type: $("#loginForm").attr('method'),
         data: data,
+        // 下面data形参指代的就是异步提交的返回结果data
         success: function (data) {
          
         }
@@ -89,11 +91,11 @@ $("#submitFile").click(function () {
                        
 //案例2,同时上传文件并提交其它数据
 $("#submitFile").click(function () {
-    //js取到文件
-    let myfile = $("#id_file")[0].files[0];
+    //js取到文件,一定要加0
+    let myfile = $("#id_file").files[0];
     //生成一个FormData对象
     let formdata = new FormData();
-    //加值
+    //加其它值
     formdata.append('name', $("#id_name").val());
     //加文件
     formdata.append('myfile', myfile);
@@ -145,7 +147,11 @@ $("#btn").on("click",function () {
         url:"/some_url/",
         type:"POST",
         data:{
-            csrfmiddlewaretoken: {{ csrf_token }}, //写在模板中，才会被渲染
+            //写在模板中，才会被渲染
+            'csrfmiddlewaretoken': {{ csrf_token }}, 
+            //其它数据
+            'username': $("#id_username").val(),
+            'password': $('#id_password').val()       
         },
         success:function (data) {
     }
@@ -158,7 +164,9 @@ $("#btn").on("click",function () {
         url:"/some_url/",
         type:"POST",
         data:{
-            csrfmiddlewaretoken:$('[name="csrfmiddlewaretoken"]').val(),
+            'csrfmiddlewaretoken':$('[name="csrfmiddlewaretoken"]').val(),
+            'username': $("#id_username").val(),
+            'password': $('#id_password').val()       
         },
         success:function (data) {
             
@@ -229,6 +237,7 @@ class City(models.Model):
         dataType: 'json',
         success: function (data) {
             var content='';
+            //对结果进行遍历，生成下拉菜单
             $.each(data, function(i, item){
                   content+='<option value='+item.id+'>'+item.name+'</option>'
                 });
@@ -280,7 +289,7 @@ $(document).ready(function(){
         e.preventDefault();
         // 构建FormData对象
         var form_data = new FormData();
-        form_data.append('file', $('#id_file')[0].files[0]);
+        form_data.append('file', $('#id_file').files[0]);
         $.ajax({
         url: '/file/ajax_upload/',
         data: form_data,

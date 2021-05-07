@@ -296,6 +296,17 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 ![image-20210423142900021](12-sync-periodic-tasks-with-celery.assets/image-20210423142900021.png)
 
+除了在Django admin后台中查看任务状态和结果，你还可以在视图中通过`AsyncResult`方法获取任务执行状态和结果，它需要接收一个任务的`task_id`(通常为uuid格式)。
+
+```python
+from celery.result import AsyncResult
+# 调用异步任务
+async_task = add.apply_async(args=[3, 5])
+# 获取任务状态和结果
+AsyncResult(async_task.task_id).status
+AsyncResult(async_task.task_id).result
+```
+
 ## 设置定时和周期性任务
 
 借助于装`django-celery-beat`后, 你可以将任一Celery任务设置为定时任务或周期性任务。使用它你只需要通过pip安装它，并加入INSTALLED_APPS里去。

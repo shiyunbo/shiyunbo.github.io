@@ -108,7 +108,7 @@ class Book(models.Model):
 
 适合大量文本，max_length = xxx选项可选。
 
-**DateField() 和DateTimeField() 
+**DateField() 和DateTimeField() **
 
 可通过default=xx选项设置默认日期和时间。
 
@@ -116,7 +116,7 @@ class Book(models.Model):
 - 如果希望自动记录一次修改日期(modified)，可以设置: `auto_now=True`
 - 如果希望自动记录创建日期(created),可以设置`auto_now_add=True`
 
-**EmailField() 
+**EmailField() **
 
 如不是必填项，可设置blank = True和default = '。一般Email用于用户名应该是唯一的，建议设置unique = True
 
