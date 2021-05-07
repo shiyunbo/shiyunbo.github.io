@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Django REST Framework教程
-nav_order: 3
+nav_order: 7
 has_children: true
 permalink: /django/rest-framework-tutorials
 ---

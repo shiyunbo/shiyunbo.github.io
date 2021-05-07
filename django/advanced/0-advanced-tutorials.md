@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 大江狗的Django进阶教程
-nav_order: 2
+nav_order: 5
 has_children: true
 permalink: /django/advanced-tutorials
 ---

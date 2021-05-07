@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Python进阶与实战
-nav_order: 6
+nav_order: 1
 has_children: true
 permalink: /python/advanced-tutorials
 ---

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Python Web开发工具
-nav_order: 5
+nav_order: 2
 has_children: true
 permalink: /python/tools
 ---

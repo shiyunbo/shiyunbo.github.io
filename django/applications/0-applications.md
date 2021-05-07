@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 大江狗的Django实战项目
-nav_order: 1
+nav_order: 6
 has_children: true
 permalink: /django/applications-examples
 ---

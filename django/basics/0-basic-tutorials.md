@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 大江狗的Django入门教程
-nav_order: 1
+nav_order: 4
 has_children: true
 permalink: /django/basic-tutorials
 ---
