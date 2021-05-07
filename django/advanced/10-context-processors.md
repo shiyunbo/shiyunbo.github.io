@@ -61,7 +61,7 @@ Django一般包含了上述4个默认全局上下文处理器，它们作用如�
 另外Django还提供了几个全局上下文处理器：
 - django.template.context_processors.i18n：在模板里面可以直接使用settings的LANGUAGES和LANGUAGE_CODE
 - django.template.context_processors.media：可以在模板里面使用settings的MEDIA_URL参数
-- django.template.context_processors.csrf : 给模板标签 {% csrf_token %}提供token值，默认总是开启。
+- django.template.context_processors.csrf : 给模板标签 csrf_token提供值
 - django.template.context_processors.tz: 可以在模板里面使用 TIME_ZONE参数。
 
 ## 如何自定义全局上下文处理器
