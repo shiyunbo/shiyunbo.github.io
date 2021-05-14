@@ -217,7 +217,7 @@ CPU内核数:4
 
 通常，进程之间是相互独立的，每个进程都有独立的内存。通过共享内存(nmap模块)，进程之间可以共享对象，使多个进程可以访问同一个变量(地址相同，变量名可能不同)。多进程共享资源必然会导致进程间相互竞争，所以应该尽最大可能防止使用共享状态。还有一种方式就是使用队列`queue`来实现不同进程间的通信或数据共享，这一点和多线程编程类似。
 
-下例这段代码中中创建了2个独立进程，一个负责写(pw), 一个负责读(pr), 实现了共享一个队列queue。
+下例这段代码中中创建了2个独立子进程，一个负责写(pw), 一个负责读(pr), 实现了共享一个队列queue。
 
 ```text
 from multiprocessing import Process, Queue
@@ -264,6 +264,13 @@ Put B to queue...
 Get B from queue.
 Put C to queue...
 Get C from queue.
+```
+
+注意：上面案例中仅适用于两个进程通过`Queue()`进行通信。如果要实现多个进程进行数据交换呢（比如1个父进程和2个子进程需要共享内存)，这是需要使用`Manager()`方法提供的`Queue()`。否则会出现`RuntimeError: Queue objects should only be shared between processes through inheritance`的报错。
+
+```python
+from multiprocessing import Manager
+q = Manager().Queue()
 ```
 
 ## Python的多线程编程与threading模块

@@ -203,6 +203,6 @@ location / {
 
 本文介绍了uWSGI的作用及其与WSGI和uwgsi的区别，并详解介绍了如何安装, 配置和使用它。Python Web领域还有一个遵循WSGI通信规范的Gunicorn，它同样优秀，我们后面再做介绍。
 
-我是大江狗，一名Python Web技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
+本文根据网络资料整理。我是大江狗，一名Python Web技术开发爱好者。您可以通过搜索【<a href="https://blog.csdn.net/weixin_42134789">CSDN大江狗</a>】、【<a href="https://www.zhihu.com/people/shi-yun-bo-53">知乎大江狗</a>】和搜索微信公众号【Python Web与Django开发】关注我！
 
 ![Python Web与Django开发](../../assets/images/django.png)
