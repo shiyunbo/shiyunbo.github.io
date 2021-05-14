@@ -14,7 +14,7 @@ nav_order: 4
 {:toc}
 
 ---
-在前面的文章中我们以博客为例，自定义了一个简单的 `ArticleSerializer` 类, 并分别以函数视图(FBV)和基于类的视图(CBV)编写了博客文章列表资源和单篇文章资源的API。在本文中，我们将玩转DRF的序列化器，教你如何修改序列化器，控制序列化后响应数据的输出格式, 如何在反序列化时对客户端提供过来的数据进行验证(validation)以及如何动态加载或重写序列化器类自带的方法
+在前面的文章中我们以博客为例，自定义了一个简单的 `ArticleSerializer` 类, 并分别以函数视图(FBV)和基于类的视图(CBV)编写了博客文章列表资源和单篇文章资源的API。在本文中，我们将玩转DRF的序列化器，教你如何修改序列化器，控制序列化后响应数据的输出格式, 如何在反序列化时对客户端提供过来的数据进行验证(validation)以及如何动态加载或重写序列化器类自带的方法。
 {: .fs-6 .fw-300 }
 
 ## 准备工作
@@ -79,8 +79,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 ```
 
 这时你应该可以看到想要的输出数据格式了，是不是很赞?
-
-![img](4-DRF-serializer-advanced.assets/5.png)
+![img](4-DRF-serializer-advanced.assets/3.png)
 
 这个看似完美，但里面其实有个错误。我们定义了一个仅可读的status字段把原来的status字段覆盖了，这样反序列化时用户将不能再对文章发表状态进行修改（原来的status字段是可读可修改的）。一个更好的方式在`ArticleSerializer`新增一个为`full_status`的可读字段，而不是简单覆盖原本可读可写的字段。
 
@@ -123,13 +122,13 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 这时的输出数据是不是让人赏心悦目？
 
-![img](4-DRF-serializer-advanced.assets/3.png)
+![img](4-DRF-serializer-advanced.assets/4-1.jpg)
 
 不过需要注意的是`SerializerMethodField`通常用于显示模型中原本不存在的字段，类似可读字段，你不能通过反序列化对其直接进行修改。
 
 ### 使用 to_representation方法
 
-`to_representation()` 允许我们改变序列化的输出内容, 给其添加额外的数据。
+除了指定source和自定义序列化方法，`to_representation()` 也允许我们改变序列化的输出内容, 给其添加额外的数据。
 
 假设我们有如下一个文章模型(Article)：
 
@@ -245,7 +244,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 展示效果如下所示：
 
-![img](4-DRF-serializer-advanced.assets/4.png)
+![img](4-DRF-serializer-advanced.assets/5.png)
 
 此时发送GET请求展示文章列表资源是没问题的，但如果你希望发送POST请求到v1/articles/提交新文章你将会收到author字段是required的这样一个错误。为了使我们代码正确工作，我们还需要手动指定`read_only=True`这个选项。尽管我们在Meta选项已经指定了author为`read_only_fields`, 但使用嵌套序列化器时还需要重新指定一遍。
 
@@ -283,6 +282,79 @@ class ArticleSerializer(serializers.ModelSerializer):
 ![img](4-DRF-serializer-advanced.assets/8.png)
 
 前面我们介绍的都是如何通过修改序列化器来控制输出数据的展现形式。下面我们将着重看下如何在反序列化时对客户端提供过来的数据进行验证(validation)以及如何重写序列化类自带的的save和update方法。由于官方文档中有更好的例子，我们将会使用这些案例。
+
+### 序列化日期和时间
+上面例子中日期和时间都序列化成了ISO格式的时间字符串，这个一般够用了，因为前端拿到这个格式可以转成本地时间格式。但你希望在后端就设置好格式，只需要通过format这个参数设置就好了。
+```python
+ create_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", required=False, read_only=True)
+```
+
+## 关系序列化
+
+前面我们对文章模型进行了序列化，显示了每篇文章详情及其对应作者信息。这个很好理解，因为author本来就是Article模型中的一个字段。现在反过来要对用户信息进行序列化，要求返回信息里包含用户信息及所发表的文章列表，但用户User模型没有article这个字段，这时应该怎么做呢？ 答案就是使用Django REST Framework提供的关系序列化方法。
+
+### PrimaryKeyRelatedField
+
+我们的序列化器UserSerlializer类如下所示：
+
+```
+class UserSerializer(serializers.ModelSerializer):
+    articles = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'articles',)
+        read_only_fields = ('id', 'username',)
+```
+
+返回结果如下所示。你可以看到用户信息，及其发表文章的id列表。
+
+![image-20210514212054568](4-DRF-serializer-advanced.assets/image-20210514212054568.png)
+
+如果我们希望文章列表不以id形式展现，而是直接体现文章title呢? 答案是StringRelatedField。
+
+### StringRelatedField
+
+修改我们的`UserSerializer`, 如下所示：
+
+```python
+class UserSerializer(serializers.ModelSerializer):
+    articles = serializers.StringRelatedField(many=True, read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'articles',)
+        read_only_fields = ('id', 'username',)
+
+```
+
+返回结果如下所示。`StringRelatedField`会直接返回每篇文章对象通过`__str__`方法定义的字段。
+
+![image-20210514212400732](4-DRF-serializer-advanced.assets/image-20210514212400732.png)
+
+### HyperlinkedRelatedField
+
+有时我们希望更进一步，不仅仅提供每篇文章的id或title列表，而是直接提供每篇文章对应的url列表，这样访问每个url可以获得更多关于文章的信息。这时就可以使用`HyperlinkedRelatedField`，它需要接收一个view的别名(本例为`article-detail`)。
+
+再次修改我们的UserSerializer, 添加如下代码：
+
+```python
+class UserSerializer(serializers.ModelSerializer):
+    articles = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='article-detail'
+    )
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'articles',)
+        read_only_fields = ('id', 'username',)
+```
+
+返回结果如下所示：
+
+![image-20210514213211344](4-DRF-serializer-advanced.assets/image-20210514213211344.png)
 
 ## 数据验证 (Validation)
 

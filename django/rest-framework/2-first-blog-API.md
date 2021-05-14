@@ -180,7 +180,7 @@ class ArticleSerializer(serializers.Serializer):
 
 序列化器类与Django `Form`类非常相似，并在各种字段中设置各种验证，例如`required`，`max_length`和`default`。
 
-**注意**：定义序列化器时一定要注明哪些是仅可读字段(read-only fields)，哪些是普通字段。对于read-only fields，客户端是不需要也不能够通过POST或PUT请求提交相关数据进行反序列化的。
+**注意**：定义序列化器时一定要注明哪些是仅可读字段(`read-only fields`)，哪些是普通字段。对于read-only fields，客户端是不需要也不能够通过POST或PUT请求提交相关数据进行反序列化的。
 
 本例中ID和create_date都是由模型自动生成，每个article的author我们也希望在视图中与request.user绑定，而不是由用户通过POST或PUT自行修改，所以这些字段都是read-only。相反title，body和status是用户可以添加或修改的字段，所以未设成read-only。
 

@@ -1,11 +1,24 @@
 ---
-layout: post
-title: Python爬虫工具测评：下一代网络请求库httpx和parsel解析库
-description: "Python爬虫工具测评：下一代网络请求库httpx和parsel解析库与requests和BeautifulSoup对比"
-author: 大江狗
-category: Python
+3layout: default
+title: Python爬虫下一代网络请求库httpx和parsel解析库测评
+parent: Python进阶与实战
+nav_order: 3
 ---
-Python网络爬虫领域两个最新的比较火的工具莫过于httpx和parsel了。httpx号称下一代的新一代的网络请求库，不仅支持requests库的所有操作，还能发送异步请求，为编写异步爬虫提供了便利。parsel最初集成在著名Python爬虫框架Scrapy中，后独立出来成立一个单独的模块，支持XPath选择器, CSS选择器和正则表达式等多种解析提取方式, 据说相比于BeautifulSoup，parsel的解析效率更高。今天我们就以爬取链家网上的二手房在售房产信息为例，来测评下httpx和parsel这两个库。为了节约时间，我们以爬取上海市浦东新区500万元-800万元以上的房产为例。
+
+# Python爬虫下一代网络请求库httpx和parsel解析库测评
+{: .no_toc }
+
+## 目录
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+Python网络爬虫领域两个最新的比较火的工具莫过于httpx和parsel了。httpx号称下一代的新一代的网络请求库，不仅支持requests库的所有操作，还能发送异步请求。parsel最初集成在著名Python爬虫框架Scrapy中，后独立出来成立一个单独的模块，支持XPath选择器, CSS选择器和正则表达式等多种解析提取方式, 据说相比于BeautifulSoup解析效率更高。另外httpx异步协程与多进程和多线程爬虫相比到底谁更快呢?
+{: .fs-6 .fw-300 }
+
+今天我们就以爬取链家网上的二手房在售房产信息为例来好好测评下。为了节约时间，我们以爬取上海市浦东新区500万元-800万元以上的房产为例。本例不仅会给出一个客观的结论，还会教你如何写多进程，多线程和异步协程爬虫。
 
 ## requests + BeautifulSoup
 

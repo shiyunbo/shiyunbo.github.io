@@ -78,7 +78,7 @@ data = serializers.serialize("json", SomeModel.objects.all())
 data1 = serializers.serialize("json", SomeModel.objects.all(), fields=('name','id'))
 data2 = serializers.serialize("json", SomeModel.objects.filter(field = some_value))
 ```
-有时候我们只需要查询结果集的部分字段，可以使用`values('字段名','字段名2')`来要求返回的是哪些列的数据，但是返回来的是`ValueQuerySet`对象而不是`QuerySet`对象。ValuesQuerySet对象不能用 `serializers.serialize() `方法序列化成json, 需要先转换成list再用` json.dumps()`方法序列化成json格式。示例代码如下所示:
+有时候我们只需要查询结果集的部分字段，可以使用`values('字段名','字段名2')`来要求返回所需要的数据，可以提升些性能，但是返回来的结果需要先转换成列表格式，再用` json.dumps()`方法序列化成json格式。示例代码如下所示:
 
 ```python
 import json
