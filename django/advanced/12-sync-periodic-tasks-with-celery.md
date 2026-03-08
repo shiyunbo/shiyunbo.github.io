@@ -582,6 +582,17 @@ def create_article(request):
     on_commit(lambda: expand_abbreviations.delay(article.pk))
 ```
 
+## 常见问题
+
+### Celery未接收到任务
+
+
+
+### Celery接收到任务，但未执行
+
+- windows系统下需要安装eventlet，使用`Celery -A myproject worker -l info -P eventlet`命令启动Celery服务
+- 
+
 ## 小结
 
 本文详细演示了如何在Django项目中集成Celery设置执行异步、定时和周期性任务，并提供了一些高级使用案例和注意事项，希望对你有所帮助。

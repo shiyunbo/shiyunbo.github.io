@@ -2,7 +2,7 @@
 layout: default
 title:  Docker部署Django
 parent: 大江狗的Django进阶教程
-nav_order: 16
+nav_order: 18
 ---
 
 # Docker部署Django
